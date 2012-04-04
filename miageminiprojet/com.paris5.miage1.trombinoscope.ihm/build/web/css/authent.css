@@ -1,0 +1,101 @@
+/*----------------------------------------------------------
+    Document   : signup.css
+    Created on : 18 mars 2012, 07:10:20
+    Author     : mourad NEDJAHI
+    Description:
+        Purpose of the stylesheet follows.
+--------------------------------------------------------- */
+body{
+     background-image: url(../images/body-fond-bords.png);
+     background-repeat: repeat-x;
+}
+.authent_main{
+    background: white url(../images/authent_bg.jpg) no-repeat center;
+    width: 715px;
+    height: 480px;
+    margin: 0 auto;
+    position: relative;
+    margin-top: 75px;
+}
+
+.authent_form, .forgot_pwd{
+    width:330px;
+    padding: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left:350px;
+    position:absolute;
+    border: 1px solid #CCC;
+}
+
+.authent_form{
+    background:white;
+    height: 320px;
+    margin-top: 62px;
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.logo{
+    background: transparent url(../images/logo.jpg) no-repeat center;
+    display: block;
+    height: 108px;
+    width: 350px;
+    margin-left: -8px;
+}
+
+.separator{
+    background: url(../images/horizontal_separator.png) no-repeat 0 0;
+    display: block;
+    font-size: 18px;
+    height: 48px;
+    margin: -10px auto 10px;
+    padding-top: 22px;
+    text-align: center;
+    width: 365px;
+}
+
+.authent_input{
+    margin-bottom: 10px;
+    margin-left: 50px;
+    width: 240px;
+}
+
+.authent_submit, .authent_slogan{
+    margin-left: 50px;
+}
+
+.authent_remember{
+    margin-left: 38px;
+}
+
+.forgot_pwd{
+    margin-top: 350px;
+    padding-top: 20px;
+    height: 30px;
+    background-color: #F4F4F4;
+    text-align: center;
+    -webkit-border-bottom-right-radius: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -moz-border-radius-bottomright: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.sendPwdBlock {
+    background: url(../images/forgot_password.png) no-repeat;
+    display: block;
+    height: 84px;
+    width: 380px;
+    margin-left: -110px;
+}
+
+#forgot_form {
+    text-align: left;
+    padding: 18px;
+}

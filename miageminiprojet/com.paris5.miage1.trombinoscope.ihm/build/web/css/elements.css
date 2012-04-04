@@ -1,0 +1,145 @@
+/*----------------------------------------------------------
+    Document   : signup.css
+    Created on : 18 mars 2012, 07:10:20
+    Author     : mourad NEDJAHI
+    Description:
+        Purpose of the stylesheet follows.
+--------------------------------------------------------- */
+body {
+    margin: 0;
+    padding: 0;
+    font: 11px "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 11px !important;
+    background: #BDBDBD url("../images/body_bg.jpg") repeat-x top;
+    color: #222;
+}
+
+input, textarea, select {
+    display: inline-block;
+    padding: 4px;
+    margin: 0;
+    outline: none;
+    background-color: white;
+    border: 1px solid #CCC;
+    border-radius: 3px;
+    color: gray;
+}
+
+/*===============================================
+Description:
+The typography for the dojotoolkit website,
+includes all base styles.
+===============================================*/
+
+br {
+    clear: both;
+}
+
+hr {
+    height: 1px;
+    width: auto;
+    border: medium none;
+    background: #DDDDDD;
+    margin: 10px 0;
+}
+
+em, i {
+    font-style: italic;
+}
+strong, b {
+    font-weight: bold;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+    color: #333333;
+    clear: both;
+}
+
+#page h1 {
+    font-size: 28px;
+    font-weight: normal;
+    font-family: Futura, "Century Gothic", AppleGothic, sans-serif;
+    clear: none;
+}
+
+h2 {
+    font-size: 20px;
+    color: #C00;
+}
+
+
+h2 em {
+    color: #333;
+    font-style: normal;
+}
+
+h3 {
+    font-size: 16px;
+    color: #C00;
+}
+
+h4 {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+
+pre, code {
+    font-family: "Lucida Grande", "Lucida Sans", Geneva, verdana, san-serif;
+}
+pre {
+    margin: 12px 0;
+    padding: 6px 9px 7px;
+    font-size: 11px;
+    border: 1px solid #CCCCCC;
+    background: #FFFFEB;
+    color: #555;
+}
+
+code {
+    font-family:"courier" !important;
+}
+
+.blue_btn, .grey_btn{
+    background: url(../images/buttons.png) repeat-x 0 -50px;
+    border: 1px solid #5992B3;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 11px;
+    font-weight: bold;
+    height: 19px;
+    line-height: 18px;
+    padding: 0 10px;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 1px 1px 1px #3C90E3;
+}
+
+.blue_btn:hover {
+    background-position:0 -25px;
+}
+
+.grey_btn{
+    background: url(../images/buttons.png) repeat-x 0 -90px;
+}
+
+.blue_btn:hover {
+    background-position:0 -25px;
+}
+
+a, a:link {
+    color: #0092C9;
+    text-decoration: none;
+}
+a:active, a:visited {
+    color: #140586;
+}
+a:hover, a:focus {
+    text-decoration: underline;
+}
+
+a:hover img {
+    border-color: #005197;
+}
