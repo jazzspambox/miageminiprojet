@@ -1,0 +1,80 @@
+/* 
+    Document   : addUser.css
+    Created on : 1 avr. 2012, 12:39:48
+    Author     : mourad
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+#photoContainer{
+    margin-left: 150px;
+    float:left;
+}
+
+#photoLoader{
+    border: 1px solid #E5E5E5;
+    width: 300px;
+    height: 370px;
+    min-width:300px;
+    min-height:370px;
+    max-width:300px;
+    max-height:370px;
+    overflow:auto;
+    margin: 10px;
+    margin-left: 0px;;
+}
+
+#photoLoader img{
+    margin:auto;
+    max-width: 300px;
+    overflow: auto;
+}
+
+#previewContainer{
+    border: 1px solid #E5E5E5;
+    width:100px;
+    height:120px;
+    overflow:hidden;
+    float: left;
+}
+
+#dataUser{
+    float:left;
+    margin-top: 10px;
+}
+
+#dataUser label{
+    line-height:30px;
+    margin-right: 10px;
+}
+
+#dataUser input{
+    margin-top: 10px;
+    float:right;
+}
+
+#data_trombi{
+    clear: both;
+    width: 280px;
+    margin-left: 120px;
+    padding-top: 10px;
+}
+
+#data_authent {
+    border: 1px solid #E5E5E5;
+    padding:5px;
+    float: left;
+    margin-left: 10px;
+    width: 280px;
+}
+
+#data_authent h4, #data_trombi h4{
+    margin: 0px;;
+    text-align: center;
+}
+
