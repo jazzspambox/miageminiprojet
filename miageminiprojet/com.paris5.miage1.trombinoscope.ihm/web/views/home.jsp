@@ -17,7 +17,7 @@
             <!-- mini profil -->
             <div id="mini_profil">
                 <div class="mini_photo">
-                    <a href="trombinoscope?action=show_profil&id=<jsp:getProperty name="utilisateur" property="id" />">
+                    <a href="javascript:void(0);">
                         <img src="photos/<jsp:getProperty name="utilisateur" property="photoUrl" />"
                              title="<jsp:getProperty name="utilisateur" property="prenom" />
                              <jsp:getProperty name="utilisateur" property="nom" />" />
@@ -34,6 +34,7 @@
                 <span class="email"><a href="mailto:katia@alger.fr"><jsp:getProperty name="utilisateur" property="email" /></a></span>
             </div>
             <% } %>
+            <%@include file="pagination.jsp" %>
             <div id="clearer"><!-- clearer --></div>
         </div>
 <%@include file="footer.html" %>
