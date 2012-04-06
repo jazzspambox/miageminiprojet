@@ -281,15 +281,18 @@ public class UtilisateurDAO extends TrombiDAO<Utilisateur> {
         Connection connect=null;
         try {
             connect = TrombiConnection.getInstance();
-            String sql = "SELECT * FROM utilisateur u, promotion p, groupe g, formation f WHERE "
-                    + "u.formation_id=p.formation_id AND u.groupe_nom=g.groupe_nom AND p.formation_id=f.formation_id AND login=?";
+            String sql ="SELECT * FROM utilisateur u, promotion p, groupe g, formation f WHERE "
+                    + "u.login=p.login AND "
+                    + "u.groupe_nom=g.groupe_nom AND "
+                    + "p.formation_id=f.formation_id AND u.login=?";
+            
             pstm = connect.prepareStatement(sql);
             pstm.setString(1, id);
             res = pstm.executeQuery();
             if (res.next()){
                 usr = new Utilisateur();
                 usr.setLogin(res.getString("login"));
-                usr.setCreateurLogin(res.getString("createur_login"));
+                usr.setCreateurLogin(res.getString("uti_login"));
                 usr.setPassword(res.getString("password"));
                 usr.setEmail(res.getString("email"));
                 usr.setNom(res.getString("u.nom"));
@@ -298,19 +301,19 @@ public class UtilisateurDAO extends TrombiDAO<Utilisateur> {
                 usr.setMobile(res.getString("mobile"));
                 usr.setSex(res.getBoolean("sex"));
                 usr.setActive(res.getBoolean("active"));
-                usr.setDateCreation(res.getDate("dateCreation"));
+                usr.setDateCreation(res.getDate("date_creation"));
                 usr.setPhoto(res.getBlob(15));
                 usr.setPhoto(res.getString("photo_url"));
                 usr.setNumEtudiant(res.getString("num_etudiant"));
                 Groupe groupe = new Groupe(res.getString("groupe_nom"), res.getString("description"));
                 usr.setGroupe(groupe);
                 Formation formation = new Formation(
-                        res.getInt("formation_id"), 
-                        res.getString("f.nom"),
+                        res.getInt("formation_id"),
+                        res.getString("f.libelle"),
                         res.getString("f.type"),
                         res.getInt("p.session"),
                         res.getString("f.email")
-                        );
+                );
                 usr.setFormation(formation);
             }
         }
