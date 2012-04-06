@@ -13,6 +13,7 @@ public enum Action {
     AUTHENT,
     DECONNECT,
     CREATE_USER,
+    SHOW_FICHE,
     SEND_PHOTO,
     SHOW_USER,
     MODIFY_USER,
@@ -29,7 +30,7 @@ public enum Action {
     SEARCH_MOBILE,
     SEARCH_PROMOTION,
     DEFAULT;
-    
+
     /**
      * 
      * @param text

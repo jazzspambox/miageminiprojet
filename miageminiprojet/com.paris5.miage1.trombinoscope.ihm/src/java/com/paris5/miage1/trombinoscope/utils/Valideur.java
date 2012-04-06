@@ -91,6 +91,42 @@ public class Valideur {
     
     /**
      * 
+     * @param email
+     * @return 
+     */
+    public static boolean isEmail(String email){
+        return email.matches("^[a-z0-9._-]+@[a-z0-9._-]{2,}\\.[a-z]{2,4}$");
+    }
+    
+    /**
+     * 
+     * @param pwd
+     * @return 
+     */
+    public static boolean isPassword(String pwd){
+        return pwd.matches("^[a-zA-Z0-9]{8}$");
+    }
+    
+    /**
+     * 
+     * @param phone
+     * @return 
+     */
+    public static boolean isPhone(String phone){
+        return phone.matches("^0[1-9]([-. ]?[0-9]{2}){4}$");
+    }
+    
+    /**
+     * 
+     * @param phone
+     * @return 
+     */
+    public static boolean isPhoto(String photo){
+        return photo.matches("^[a-zA-Z0-9\\-\\.]+\\.(jpg|jpeg|png|gif)$");
+    }
+    
+    /**
+     * 
      * @param regexp
      * @param parameter
      * @param defaut
