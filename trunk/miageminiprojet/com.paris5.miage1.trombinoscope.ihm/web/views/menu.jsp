@@ -42,7 +42,7 @@
                 <ul>
                     <li><a href="trombinoscope?action=search"><span>Accueil</span></a>
                     </li>
-                    <li><a href="javascript:void(0);" ><span>Fiche</span></a>
+                    <li><a href="trombinoscope?action=show_user" ><span>Fiche</span></a>
                     </li>
                     <li><a href="trombinoscope?action=create_user" ><span>Ajouter utilisateur</span></a>
                     </li>

@@ -62,12 +62,22 @@
                     <select id="sex" name="sex" class="validate[required] sex">
                         <option value="0">Homme</option>
                         <option value="1">Femme</option>
-                    </select><br/>                    
+                    </select>
+                    <select id="search_promo" class="search_promo" name="search_promo">
+                        <%
+                        for(i=0; i<formations.size(); i++){ 
+                            formation = formations.get(i);
+                            pageContext.setAttribute("formation", formation);
+                        %>  
+                        <option value="<jsp:getProperty name="formation" property="id" />">
+                            <jsp:getProperty name="formation" property="label" />
+                        </option>
+                        <% } %>
+                    </select><br/>
                     <label for="nom">- nom : *</label><input type="text" name="nom" value="" class="validate[optional,funcCall[validate2fields],custom[onlyLetter],length[0,100]]" id="firstname"/><br/>
                     <label for="nom">- prenom : *</label><input type="text" name="prenom" value="" class="validate[optional,funcCall[validate2fields],custom[onlyLetter],length[0,100]]" id="lastname"/><br/>
                     <label for="nom">- num etudiant : </label><input type="text" name="num_etudiant" value="" /><br/>
                     <label for="nom">- e-mail *:</label><input type="text" name="email" value="" class="validate[optional,custom[email]]" id="email" /><br/>
-                    <label for="nom">- adresse :</label><input type="text" name="adresse" value="" /><br/>
                     <label for="nom">- telephone portable :</label><input type="text" name="portable" value="" class="validate[optional,custom[telephone]]" id="portable" /><br/>
                     <label for="nom">- telephone mobile :</label><input type="text" name="mobile" value="" class="validate[optional,custom[telephone]]" id="mobile" /><br/>
                     <input type="button" name="cancel" value="annuler" class="grey_btn submit_btn"  />
