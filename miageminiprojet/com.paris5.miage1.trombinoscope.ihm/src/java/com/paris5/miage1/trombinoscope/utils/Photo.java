@@ -12,44 +12,56 @@ import javax.imageio.ImageIO;
 
 public class Photo {
 
+    /**
+     * 
+     */
     BufferedImage img;
-    private String image_url;
+    File destination;
     private String image_ext;
-    private String image_dest;
 
-    public Photo(String image_url, String image_dest) {
-        super(ImageIO.read(new File(image_url)));
-        this.image_url = image_url;
-        String ext[] = image_url.split("\\.");
-        this.image_ext = ext[0].toUpperCase();
-        this.image_dest = image_dest;
+    /**
+     * 
+     * @param image_url
+     * @param image_dest
+     * @throws IOException 
+     */
+    private Photo(String dir, String origine, String image_name) throws IOException {   
+        img = ImageIO.read(new File(dir+origine));
+        String ext[] = origine.split("\\.");
+        this.image_ext = ext.length>0? ext[1].toLowerCase() : "";
+        this.destination = new File(dir+image_name+'.'+this.image_ext);
     }
 
-    private BufferedImage resize(int targetWidth, int targetHeight, BufferedImage src) {
-        double scaleW = (double) targetWidth / (double) src.getWidth();
-        double scaleH = (double) targetHeight / (double) src.getHeight();
-
+    /**
+     * 
+     * @param targetWidth
+     * @param targetHeight
+     * @throws IOException 
+     */
+    public void resize(int targetWidth, int targetHeight) throws IOException {
+        double scaleW = (double) targetWidth / (double) img.getWidth();
+        double scaleH = (double) targetHeight / (double) img.getHeight();
         double scale = scaleW < scaleH ? scaleW : scaleH;
 
-        BufferedImage result = new BufferedImage((int) (src.getWidth() * scale),
-                (int) (src.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
+        BufferedImage result = new BufferedImage((int) (img.getWidth() * scale),
+                (int) (img.getHeight() * scale), BufferedImage.TYPE_INT_ARGB);
 
         Graphics2D g2d = result.createGraphics();
-        g2d.drawImage(src, 0, 0, result.getWidth(), result.getHeight(), null);
+        g2d.drawImage(img, 0, 0, result.getWidth(), result.getHeight(), null);
         g2d.dispose();
-
-        return result;
+        
+        destination.createNewFile();
+        ImageIO.write(result, image_ext, destination);
     }
-
-    private BufferedImage cropImage(x, y, width, height) {
-        BufferedImage dest = img.getSubimage(x, y, width, height);
-        return dest;
-    }
-
-    public void flush() throws IOException {
-        BufferedImage origin = ImageIO.read(new File(image_url));
-        File dest = new File(image_dest);
-        dest.createNewFile();
-        ImageIO.write(resize(100, 100, origin), image_ext, dest);
+    
+    /**
+     * 
+     * @param x
+     * @param y
+     * @param width
+     * @param height 
+     */
+    public void cropImage(int x, int y, int width, int height) {
+        img = img.getSubimage(x, y, width, height);
     }
 }
