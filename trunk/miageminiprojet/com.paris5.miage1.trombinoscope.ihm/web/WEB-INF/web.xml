@@ -9,6 +9,14 @@
         <servlet-name>Trombinoscope</servlet-name>
         <url-pattern>/trombinoscope</url-pattern>
     </servlet-mapping>
+    <filter>
+        <filter-name>Tracker</filter-name>
+        <filter-class>com.paris5.miage1.trombinoscope.utils.Tracker</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>Tracker</filter-name>
+        <servlet-name>Trombinoscope</servlet-name>
+    </filter-mapping>
     <session-config>
         <session-timeout>
             30
@@ -17,4 +25,4 @@
     <welcome-file-list>
         <welcome-file>views/index.jsp</welcome-file>
     </welcome-file-list>
-</web-app>
+    </web-app>
