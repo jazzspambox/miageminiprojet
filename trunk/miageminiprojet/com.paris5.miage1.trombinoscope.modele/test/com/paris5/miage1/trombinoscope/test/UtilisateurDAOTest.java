@@ -119,7 +119,7 @@ public class UtilisateurDAOTest {
         usr.setDateCreation(d);
         usr.setPhoto("mini_fenec.jpeg");
         
-        usr.setFormation(new Formation(1));
+        usr.setFormation(new Formation(1,2012));
         usr.setGroupe(new Groupe("01JWGYNYQP6RUND5YCIPV2M0LAAGWWSPDJ96LVDY4U7050VS3U5A BH8IEWD 14A4WG2CQHR VOMEV9JCO2MG FRH7P1UKTC2T5F6II66HRAM9Q4SPQE8HMI63RIMG54MHBXL 653RFFX2SF3AG3B2HGPTWHFLQ3OCJR2XJTM8E1G63FF49QQYNTSNSCESHWOEBU4 YE7R8TDBQCIE 3I84YL6T3RPI8KYURCN DUP75W4 JJMAKRW5CVF6FOYB"));
         return usr;
     }
@@ -135,7 +135,7 @@ public class UtilisateurDAOTest {
         usr.setPassword("1234");
         usr.setEmail("test@test.fr");
         
-        usr.setFormation(new Formation(1));
+        usr.setFormation(new Formation(1,2012));
         usr.setGroupe(new Groupe("01JWGYNYQP6RUND5YCIPV2M0LAAGWWSPDJ96LVDY4U7050VS3U5A BH8IEWD 14A4WG2CQHR VOMEV9JCO2MG FRH7P1UKTC2T5F6II66HRAM9Q4SPQE8HMI63RIMG54MHBXL 653RFFX2SF3AG3B2HGPTWHFLQ3OCJR2XJTM8E1G63FF49QQYNTSNSCESHWOEBU4 YE7R8TDBQCIE 3I84YL6T3RPI8KYURCN DUP75W4 JJMAKRW5CVF6FOYB"));
         return usr;
     }
