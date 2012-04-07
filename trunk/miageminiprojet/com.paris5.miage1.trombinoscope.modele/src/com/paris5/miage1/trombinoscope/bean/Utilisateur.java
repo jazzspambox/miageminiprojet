@@ -14,24 +14,24 @@ import java.util.ArrayList;
  */
 public class Utilisateur {
 
-    private String login;
-    private String password;
-    private String createurLogin;
-    private String email;
-    private String nom;
-    private String prenom;
-    private String telephone;
-    private String mobile;
-    private boolean sex;
-    private boolean active;
+    private String login="";
+    private String password="";
+    private String createurLogin="";
+    private String email="";
+    private String nom="";
+    private String prenom="";
+    private String telephone="";
+    private String mobile="";
+    private boolean sex=true;
+    private boolean active=false;
     private Date dateCreation;
-    private Blob photo;
-    private File photoUploaded;
-    private String numEtudiant;
-    private Groupe groupe;
-    private Formation formation;
-    private ArrayList projets;
-    private ArrayList commentaires;
+    private Blob photo=null;
+    private File photoUploaded=null;
+    private String numEtudiant="";
+    private Groupe groupe=null;
+    private Formation formation=null;
+    private ArrayList projets=null;
+    private ArrayList commentaires=null;
 
     /**
      * 

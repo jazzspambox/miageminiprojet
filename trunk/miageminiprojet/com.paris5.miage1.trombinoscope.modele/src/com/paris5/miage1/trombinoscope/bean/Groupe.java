@@ -21,6 +21,9 @@ public class Groupe {
     private String nom;
     private String description;
     private  List<Droit> droits;
+
+    public Groupe() {
+    }
     
     /**Initiateur
      * @param nom 
@@ -137,4 +140,10 @@ public class Groupe {
         
         return retour;
     }
+
+    @Override
+    public String toString() {
+        return "Groupe{" + "nom=" + nom + ", description=" + description + ", droits=" + droits + '}';
+    }
+    
 }

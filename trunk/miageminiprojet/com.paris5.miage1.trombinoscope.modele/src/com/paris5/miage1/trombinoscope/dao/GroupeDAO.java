@@ -254,4 +254,34 @@ public class GroupeDAO extends TrombiDAO<Groupe> {
         }
         return grp;
     }
+    
+    /**
+     * 
+     * @return
+     * @throws SQLException 
+     */
+    public List<Groupe> list() throws SQLException{
+        Groupe grp=null; 
+        ArrayList<Groupe> list=new ArrayList<Groupe>();
+        PreparedStatement ps = null;
+        ResultSet res=null;
+        Connection connect=null;
+        
+        try{
+            connect = TrombiConnection.getInstance();
+            String sql = "SELECT * FROM groupe ORDER BY groupe_nom DESC";
+            ps = connect.prepareStatement(sql);
+            res = ps.executeQuery(sql);
+            
+            while(res.next()){
+                grp = new Groupe(res.getString("groupe_nom"));
+                grp.setDescription(res.getString("description"));
+                list.add(grp);
+            }
+        }
+        finally{
+            TrombiConnection.closeAll(connect, ps, res);
+        }
+        return list;
+    }
 }
