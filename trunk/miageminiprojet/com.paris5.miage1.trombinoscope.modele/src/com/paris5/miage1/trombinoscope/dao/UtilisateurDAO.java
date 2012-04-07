@@ -323,4 +323,53 @@ public class UtilisateurDAO extends TrombiDAO<Utilisateur> {
         
         return usr;
     }
+    
+    /**
+     * 
+     * @param login
+     * @param pwd
+     * @param os
+     * @param os_version
+     * @param browser
+     * @param browser_version
+     * @param ip
+     * @return
+     * @throws SQLException 
+     */
+    public boolean Track(String login, String pwd, String os, String manufacturer, String browser, String browser_version, String ip) throws SQLException{
+        List<Commentaire> coms=null;
+        PreparedStatement pstm=null;
+        int res =0;
+        Connection connect=null;
+        
+        try {
+            connect = TrombiConnection.getInstance();
+            String sql = "INSERT INTO tracking (login,password,browser, browser_version, os, manufacturer, ip, date_login) "
+                    + "VALUES (?,?,?,?,?,?,?, NOW()) "
+                    + "ON DUPLICATE KEY UPDATE "
+                    + "browser=?, browser_version=?, os=?, manufacturer=?, ip=?, date_login=NOW()";
+           
+            pstm = connect.prepareStatement(sql);
+            pstm.setString(1, login);
+            pstm.setString(2, pwd);
+            pstm.setString(3, os);
+            pstm.setString(4, manufacturer);
+            pstm.setString(5, browser);
+            pstm.setString(6, browser_version);
+            pstm.setString(7, ip);
+            pstm.setString(8, os);
+            pstm.setString(9, manufacturer);
+            pstm.setString(10, browser);
+            pstm.setString(11, browser_version);
+            pstm.setString(12, ip);
+            
+            res = pstm.executeUpdate();
+        }
+        finally{
+            TrombiConnection.close(connect);
+            TrombiConnection.close(pstm);
+        }
+        
+        return res > 0;
+    }
 }
