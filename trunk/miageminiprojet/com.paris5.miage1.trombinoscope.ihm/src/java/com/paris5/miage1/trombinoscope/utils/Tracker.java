@@ -66,7 +66,7 @@ public class Tracker implements Filter {
                         request.getRemoteAddr()
                         );
             } catch (SQLException ex) {
-                Logger.getLogger(Tracker.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(Tracker.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
