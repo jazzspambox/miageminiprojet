@@ -202,11 +202,17 @@ public class Utilisateur {
 
     public String getPhotoUrl() {
         if (photoUploaded != null) {
+            return photoUploaded.getName();
+        }
+        return null;
+    }
+    
+    public String getPhotoPath() {
+        if (photoUploaded != null) {
             return photoUploaded.getPath();
         }
         return null;
     }
-
     /**
      * 
      * @return
@@ -383,7 +389,11 @@ public class Utilisateur {
     public void setPhoto(String photo) {
         photoUploaded = new File(photo);
     }
-
+    
+    public void setPhoto(String path, String photo) {
+        photoUploaded = new File(path, photo);
+    }
+    
     /**
      * 
      * @param photo
@@ -471,6 +481,6 @@ public class Utilisateur {
                 + "\n sex=" + sex
                 + "\n active=" + active
                 + "\n dateCreation=" + dateCreation
-                + "\n photo=" + photo + "\n}";
+                + "\n photo=" + photoUploaded + "\n}";
     }
 }
