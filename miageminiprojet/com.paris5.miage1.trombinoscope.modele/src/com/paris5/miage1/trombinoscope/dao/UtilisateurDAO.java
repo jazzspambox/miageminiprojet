@@ -8,6 +8,7 @@ import com.paris5.miage1.trombinoscope.bean.Utilisateur;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -51,48 +52,47 @@ public class UtilisateurDAO extends TrombiDAO<Utilisateur> {
         int res = 0;
         try {
             connect = TrombiConnection.getInstance();
+            connect.setAutoCommit(false);
             // Inserer
             String sql = "INSERT INTO utilisateur("
                             +"login,"
-                            +"createur_login,"
-                            +"formation_id,"
+                            +"uti_login,"
                             +"groupe_nom,"
                             +"password,"
                             +"email,"
                             +"nom,"
                             +"prenom,"
+                            +"num_etudiant,"
                             +"telephone,"
                             +"mobile,"
                             +"sex,"
                             +"active,"
-                            +"dateCreation,"
+                            +"date_creation,"
                             +"photo,"
                             +"photo_url"
                             + ") "
-                         +"VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                         +"VALUES (?,?,?,?,?,?,?,?,?,?,?,1,NOW(),?,?)";
             
             insert = connect.prepareStatement(sql);
             insert.setString(1, usr.getLogin());
             insert.setString(2, usr.getCreateurLogin());
-            insert.setInt(3, usr.getFormation().getId());
-            insert.setString(4, usr.getGroupe().getNom());
-            insert.setString(5, usr.getPassword());
-            insert.setString(6, usr.getEmail());
-            insert.setString(7, usr.getNom());
-            insert.setString(8, usr.getPrenom());
+            insert.setString(3, usr.getGroupe().getNom());
+            insert.setString(4, usr.getPassword());
+            insert.setString(5, usr.getEmail());
+            insert.setString(6, usr.getNom());
+            insert.setString(7, usr.getPrenom());
+            insert.setString(8, usr.getNumEtudiant());
             insert.setString(9, usr.getTelephone());
             insert.setString(10, usr.getMobile());
             insert.setBoolean(11, usr.getSex());
-            insert.setBoolean(12, usr.isActive());
-            insert.setDate(13, usr.getDateCreation());
             if(usr.getPhotoUploaded()!=null){
                 fis = new FileInputStream(usr.getPhotoUploaded());
-                insert.setBinaryStream(14, fis, (int) usr.getPhotoUploaded().length());
+                insert.setBinaryStream(12, (InputStream) fis, (int) usr.getPhotoUploaded().length());
             }
             else{
-                insert.setBinaryStream(14,null);
+                insert.setBinaryStream(12,null);
             }
-                
+            insert.setString(13, usr.getPhotoUrl());
             res = insert.executeUpdate();
             if(res>0){
                 sql = "INSERT INTO promotion (login, formation_id, session) VALUES(?,?,?)";
@@ -102,6 +102,11 @@ public class UtilisateurDAO extends TrombiDAO<Utilisateur> {
                 insert.setInt(2, usr.getFormation().getId());
                 insert.setInt(3, usr.getFormation().getSession());
                 res = insert.executeUpdate();
+                
+                if(res>0)
+                    connect.commit();
+                else
+                    connect.rollback();
             }
         }        
         catch (FileNotFoundException ex) {
