@@ -10,30 +10,24 @@ package com.paris5.miage1.trombinoscope.utils;
  */
 public class Notification {
     
-    private String message;
-    private int level;
-    private static int id=0;
+    private String message="";
+    private String level="";
+    private int id=0;
     
-    public static enum LevelList{
+    public enum LevelList{
         OK, WARNING, ERROR;
+    }
+
+    public Notification() {
     }
 
     public Notification( LevelList level, String message) {
         this.message = message;
-        switch(level){
-            case OK :
-                this.level = 1;
-                break;
-            case WARNING :
-                this.level = 2;
-                break;
-            case ERROR :
-                this.level = 3;
-                break;
-        }        
+        this.level = level.toString().toLowerCase();
+        id++;
     }
 
-    public int getLevel() {
+    public String getLevel() {
         return level;
     }
 
@@ -41,7 +35,11 @@ public class Notification {
         return message;
     }
 
-    public void setLevel(int level) {
+    public int getId() {
+        return id;
+    }
+
+    public void setLevel(String level) {
         this.level = level;
     }
 

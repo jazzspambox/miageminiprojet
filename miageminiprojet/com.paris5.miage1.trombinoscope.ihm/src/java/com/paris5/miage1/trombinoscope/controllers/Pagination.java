@@ -1,18 +1,15 @@
 package com.paris5.miage1.trombinoscope.controllers;
 import com.paris5.miage1.trombinoscope.processor.Zone;
-import com.paris5.miage1.trombinoscope.utils.Action;
 import com.paris5.miage1.trombinoscope.utils.Configuration;
-import java.io.IOException;
 import java.sql.SQLException;
-import javax.servlet.ServletException;
-
+import java.util.ArrayList;
 /**
  * @author mourad
  */
 public class Pagination implements Zone {
     
     private int nombrePages=1;
-    private int minimum=Configuration.PROFILSPAGE; //invarient
+    private int minimum=Configuration.PROFILS_PAR_PAGE; //invarient
     private int currentPage;
 
     public Pagination(int page, int resultCount) throws SQLException, NullPointerException {
@@ -60,6 +57,10 @@ public class Pagination implements Zone {
     public int getNombrePages() {
         return nombrePages;
     }
+    
+    public int getSeparator() {
+        return Configuration.PAGINATION_POINTILLES;
+    }
 
     public void setCurrentPage(int currentPage) {
         this.currentPage = currentPage;
@@ -74,8 +75,36 @@ public class Pagination implements Zone {
     }
     
     private void init(int currentPage, double nb){
-        nombrePages = (int) Math.ceil(nb/Configuration.PROFILSPAGE);
-        minimum = (this.nombrePages - 1) * Configuration.PROFILSPAGE;
+        nombrePages = (int) Math.ceil(nb/Configuration.PROFILS_PAR_PAGE);
+        minimum = (this.nombrePages - 1) * Configuration.PROFILS_PAR_PAGE;
         this.currentPage = currentPage;
+    }
+    
+    public ArrayList<Integer> getList(){
+        ArrayList<Integer> res = new ArrayList<Integer>();
+        
+        int born= (int) Math.ceil(Configuration.PAGINATION_POINTILLES/2);
+        int it=currentPage-born;
+        if(it<=1){
+            it = 1;
+        }
+        else {
+            res.add(0);
+        }
+        
+        int limit = it+Configuration.PAGINATION_POINTILLES;
+        if(limit> nombrePages)
+            limit = nombrePages;
+        
+        while(it<=limit){
+            res.add(it);
+            it++;
+        }
+        
+        if(it-1<nombrePages){
+            res.add(0);
+        }
+        
+        return res;
     }
 }

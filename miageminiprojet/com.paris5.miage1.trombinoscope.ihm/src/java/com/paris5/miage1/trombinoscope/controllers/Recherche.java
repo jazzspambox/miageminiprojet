@@ -19,15 +19,10 @@ import com.paris5.miage1.trombinoscope.utils.Configuration;
  */
 public class Recherche extends ZoneManager {
 
-    private int currentSession;
     private int page;
 
     public Recherche(HttpServletRequest request, HttpServletResponse response) throws SQLException, NullPointerException, ServletException, IOException {
         super(true, request, response);
-        String format = "yyyy";
-        java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
-        java.util.Date date = new java.util.Date();
-        currentSession = Integer.parseInt(formater.format(date));
         page = Valideur.getNumeric(request.getParameter("page"), 1);
     }
 
@@ -54,14 +49,14 @@ public class Recherche extends ZoneManager {
                     if (userCount > 0) {
                         p = new Pagination(page, userCount);
                         this.addZone(p);
-                        search.setLimit(p.getMinimum(), Configuration.PROFILSPAGE);
+                        search.setLimit(p.getMinimum(), Configuration.PROFILS_PAR_PAGE);
                         users = new Liste (search.findByPromo(String.valueOf(user.getFormation().getId()), page));
                     }
                 } else {
                     userCount = search.countAllPromo(currentSession);
                     p = new Pagination(page, userCount);
                     this.addZone(p);
-                    search.setLimit(p.getMinimum(), Configuration.PROFILSPAGE);
+                    search.setLimit(p.getMinimum(), Configuration.PROFILS_PAR_PAGE);
                     users = new Liste(search.searchfAllPromo(currentSession));
                 }
                 break;

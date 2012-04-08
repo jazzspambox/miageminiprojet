@@ -28,6 +28,9 @@ public abstract class Module implements Processeur{
     protected HttpSession session;
     private String url;
     private String path;
+    protected int currentSession;
+    protected int currentMonth;
+    protected int currentDay;
     
     //Utilisateur user;
     //HttpSession session;
@@ -51,6 +54,14 @@ public abstract class Module implements Processeur{
         
         this.url = request.getAttribute("url").toString();
         this.path = request.getAttribute("servletPath").toString();
+        
+        String format = "yyyy-MM-dd";
+        java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
+        java.util.Date date = new java.util.Date();
+        String res[] = formater.format(date).split("-");
+        currentSession = Integer.valueOf(res[0]);
+        currentMonth = Integer.valueOf(res[1]);
+        currentDay = Integer.valueOf(res[2]);
     }
 
     public boolean isConnectMode() {

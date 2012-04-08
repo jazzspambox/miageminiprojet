@@ -34,7 +34,6 @@ public final class Trombinoscope extends HttpServlet {
         // useless for now
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
@@ -46,7 +45,7 @@ public final class Trombinoscope extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         assert request.getParameter("action") != null;
         this.initEnv(request);
-        
+
         String action = Valideur.getAuthorized(request.getParameter("action"));
         Module module = null;
         try {
@@ -56,23 +55,23 @@ public final class Trombinoscope extends HttpServlet {
                     break;
                 case CREATE_USER:
                 case SEND_PHOTO:
-                case SHOW_USER: 
+                case SHOW_USER:
                     module = new UtilisateurManager(request, response);
                     break;
                 case SEARCH:
                     module = new Recherche(request, response);
                     break;
-                    
+
                 default:
                     errorRedirect(module, request, response);
             }
 
             module.run();
         } catch (SQLException ex) {
-            Logger.getLogger(Trombinoscope.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(Trombinoscope.class.getName()).log(Level.SEVERE, null, ex);
             errorRedirect(module, request, response);
         } catch (Exception e) {
-            Logger.getLogger(Trombinoscope.class.getName()).log(Level.SEVERE, null, e);
+            //Logger.getLogger(Trombinoscope.class.getName()).log(Level.SEVERE, null, e);
             errorRedirect(module, request, response);
         }
     }
@@ -88,28 +87,22 @@ public final class Trombinoscope extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         assert request.getParameter("action") != null;
         this.initEnv(request);
-        
+
         Module module = null;
         try {
+
+            String action = this.getAction(request);
             
-            String action = Valideur.getAuthorized(request.getParameter("action"));
-            if (action == null) {
-                Part part = request.getPart("action");
-                Scanner s = new Scanner(part.getInputStream());
-                action = Valideur.getAuthorized(s.nextLine());
-                request.setAttribute("action", action);
-            }
-            System.out.println("post="+action);
             switch (Action.get(action)) {
                 case AUTHENT:
-                case DECONNECT:
                     module = new Authentification(request, response);
                     break;
                 case SEARCH:
                     module = new Recherche(request, response);
                     break;
-                case SEND_PHOTO :
-                case ADD_USER :
+                case SEND_PHOTO:
+                case ADD_USER:
+                case SHOW_USER:
                     module = new UtilisateurManager(request, response);
                     break;
                 default:
@@ -142,13 +135,24 @@ public final class Trombinoscope extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
-    private void initEnv(HttpServletRequest request){
-        String servletPath=this.getServletContext().getRealPath("");
-        servletPath = servletPath.replace("build/", "") + '/';  
+
+    private void initEnv(HttpServletRequest request) {
+        String servletPath = this.getServletContext().getRealPath("");
+        servletPath = servletPath.replace("build/", "") + '/';
         String url = request.getScheme() + "//" + request.getServerName() + ':' + request.getServerPort()
-                +request.getContextPath();
+                + request.getContextPath();
         request.setAttribute("servletPath", servletPath);
         request.setAttribute("url", url);
+    }
+
+    private String getAction(HttpServletRequest request) throws IOException, ServletException {
+        String action = Valideur.getAuthorized(request.getParameter("action"));
+        if (action == null) {
+            Part part = request.getPart("action");
+            Scanner s = new Scanner(part.getInputStream());
+            action = Valideur.getAuthorized(s.nextLine());
+            request.setAttribute("action", action);
+        }
+        return action;
     }
 }

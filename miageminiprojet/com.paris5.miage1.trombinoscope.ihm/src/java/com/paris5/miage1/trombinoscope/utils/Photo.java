@@ -11,11 +11,14 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Photo {
-
+    
+    private int width;
+    private int height;
+    
     /**
      * 
      */
-    BufferedImage img;
+    File origine;
     File destination;
     private String image_ext;
 
@@ -25,11 +28,15 @@ public class Photo {
      * @param image_dest
      * @throws IOException 
      */
-    private Photo(String dir, String origine, String image_name) throws IOException {   
-        img = ImageIO.read(new File(dir+origine));
+    public Photo(String dir, String origine, String image_name) throws IOException {
+        
+        this.origine = new File(dir+origine);
+        BufferedImage img = ImageIO.read( this.origine);
+        width = img.getWidth();
+        height = img.getHeight();
         String ext[] = origine.split("\\.");
         this.image_ext = ext.length>0? ext[1].toLowerCase() : "";
-        this.destination = new File(dir+image_name+'.'+this.image_ext);
+        this.destination = new File(dir+Configuration.Photo.PATH+File.separator+image_name+'.'+this.image_ext);
     }
 
     /**
@@ -39,6 +46,7 @@ public class Photo {
      * @throws IOException 
      */
     public void resize(int targetWidth, int targetHeight) throws IOException {
+        BufferedImage img = ImageIO.read(origine);
         double scaleW = (double) targetWidth / (double) img.getWidth();
         double scaleH = (double) targetHeight / (double) img.getHeight();
         double scale = scaleW < scaleH ? scaleW : scaleH;
@@ -50,8 +58,18 @@ public class Photo {
         g2d.drawImage(img, 0, 0, result.getWidth(), result.getHeight(), null);
         g2d.dispose();
         
-        destination.createNewFile();
-        ImageIO.write(result, image_ext, destination);
+        if(ImageIO.write(result, image_ext, origine)){
+            this.width = result.getWidth();
+            this.height = result.getHeight();
+        }
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
     }
     
     /**
@@ -61,7 +79,22 @@ public class Photo {
      * @param width
      * @param height 
      */
-    public void cropImage(int x, int y, int width, int height) {
-        img = img.getSubimage(x, y, width, height);
+    public void crop(int x, int y, int x2, int y2) throws IOException {
+        BufferedImage img = ImageIO.read(origine);
+        BufferedImage result = img.getSubimage(x, y, x2, y2);
+        if(ImageIO.write(result, image_ext, origine)){
+            this.width = result.getWidth();
+            this.height = result.getHeight();
+        }
+    }
+    
+    public File get() throws IOException{
+        if(!destination.isFile()){
+            destination.createNewFile();
+            BufferedImage img = ImageIO.read(origine);
+            ImageIO.write(img, image_ext, destination);
+        }
+        
+        return destination;
     }
 }

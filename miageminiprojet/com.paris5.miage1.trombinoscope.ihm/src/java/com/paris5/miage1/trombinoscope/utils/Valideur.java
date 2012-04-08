@@ -18,7 +18,7 @@ public class Valideur {
     public static int getNumeric(String parameter, int defaut) {
         String res = cleanparameter("^[^0-9]*$", parameter, null);
         if (res!=null)
-            return Integer.parseInt(res);
+            return (int) Float.parseFloat(res);
         
         return defaut;
     }
@@ -77,7 +77,7 @@ public class Valideur {
      * @return 
      */
     public static String getAuthorized(String parameter, String defaut){
-        return cleanparameter("^[^a-zA-Z0-9_-]*$", parameter, defaut);
+        return cleanparameter("^[^a-zA-Z0-9_\\-]*$", parameter, defaut);
     }
     
     /**
@@ -122,7 +122,7 @@ public class Valideur {
      * @return 
      */
     public static boolean isPhoto(String photo){
-        return photo.matches("^[a-zA-Z0-9\\-\\.]+\\.(jpg|jpeg|png|gif)$");
+        return photo.matches("^[a-zA-Z0-9\\-_\\/\\\\]*+\\.(jpg|jpeg|png|gif)$");
     }
     
     /**
