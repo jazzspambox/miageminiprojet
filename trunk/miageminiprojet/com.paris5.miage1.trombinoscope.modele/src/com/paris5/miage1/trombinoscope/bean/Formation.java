@@ -84,6 +84,10 @@ public class Formation {
         return type + ' ' + nom + ' ' + session;
     }
 
+    public void setSession(int session) {
+        this.session = session;
+    }
+
     @Override
     public String toString() {
         return "Formation{" + "id=" + id + ", nom=" + nom + ", type=" + type + ", session=" + session + ", mail=" + mail + '}';
