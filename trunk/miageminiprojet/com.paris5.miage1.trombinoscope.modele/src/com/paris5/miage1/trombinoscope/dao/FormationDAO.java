@@ -76,7 +76,44 @@ public class FormationDAO extends TrombiDAO<Formation> {
             
         return formations;       
     }
-
+    
+    /**
+     * Cette methode retourne toutes les formations de la base de données.
+     * 
+     * @return une liste de formations
+     * @throws SQLException  
+     */
+    public List<Formation> listAll() throws SQLException {
+        
+        List<Formation> formations=null;
+        PreparedStatement pstm=null;
+        ResultSet res =null;
+        Connection connect=null;
+        Formation formation = null;
+        
+        try {
+            connect = TrombiConnection.getInstance();
+            String sql = "SELECT * FROM formation";
+            pstm = connect.prepareStatement(sql);
+            res = pstm.executeQuery(sql);
+            formations=new ArrayList<Formation>();
+            while(res.next()){
+                formation = new Formation(
+                        res.getInt("formation_id"), 
+                        res.getString("libelle"),
+                        res.getString("type"),
+                        0,
+                        res.getString("email")
+                        );
+                formations.add(formation);  
+            }
+        }
+        finally{
+            TrombiConnection.closeAll(connect, pstm, res);
+        }
+            
+        return formations;       
+    }
     /**
      * Cette methode recherche une formation par son identifiant dans la base de données.
      * 

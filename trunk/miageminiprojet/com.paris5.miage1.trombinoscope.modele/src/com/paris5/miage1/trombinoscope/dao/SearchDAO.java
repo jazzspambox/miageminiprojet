@@ -22,7 +22,8 @@ public class SearchDAO {
     private final static int MEN = 0;
     private final static int WOMEN = 1;
     private final static int BOTH = 2;
-    String limit;
+    private String limit;
+    private final static String mandatory="nom IS NOT NULL AND prenom IS NOT NULL AND photo_url IS NOT NULL AND session IS NOT NULL AND ";
 
     /**
      * limit les resultat de la requete
@@ -145,7 +146,7 @@ public class SearchDAO {
 
         try {
             connect = TrombiConnection.getInstance();
-            String sql = "SELECT * FROM utilisateur u, promotion p, groupe g, formation f WHERE "
+            String sql = "SELECT * FROM utilisateur u, promotion p, groupe g, formation f WHERE " + mandatory
                     + "u.formation_id=p.formation_id AND u.groupe_nom=g.groupe_nom AND p.formation_id=f.formation_id AND u.email=?";
 
             pstm = connect.prepareStatement(sql);
@@ -180,7 +181,7 @@ public class SearchDAO {
 
         try {
             connect = TrombiConnection.getInstance();
-            String sql = "SELECT * FROM utilisateur u, promotion p, groupe g, formation f WHERE "
+            String sql = "SELECT * FROM utilisateur u, promotion p, groupe g, formation f WHERE " + mandatory
                     + "u.formation_id=p.formation_id AND u.groupe_nom=g.groupe_nom AND p.formation_id=f.formation_id AND u.num_etudiant=?";
             pstm = connect.prepareStatement(sql);
             pstm.setString(1, id);
@@ -220,7 +221,7 @@ public class SearchDAO {
             if (cellular) {
                 where = "mobile";
             }
-            String sql = "SELECT * FROM utilisateur u, promotion p, groupe g, formation f WHERE "
+            String sql = "SELECT * FROM utilisateur u, promotion p, groupe g, formation f WHERE " + mandatory
                     + "u.formation_id=p.formation_id AND u.groupe_nom=g.groupe_nom AND p.formation_id=f.formation_id AND "
                     + where + "=?" + limit;
             pstm = connect.prepareStatement(sql);
@@ -252,7 +253,7 @@ public class SearchDAO {
     public ArrayList<Utilisateur> findByLastName(String name) throws SQLException {
         assert name != null && !name.equals("");
         StringBuffer sql = new StringBuffer();
-        sql.append("SELECT * FROM utilisateur u, promotion p, groupe g, formation f WHERE ").append(
+        sql.append("SELECT * FROM utilisateur u, promotion p, groupe g, formation f WHERE ").append(mandatory).append(
                 "u.formation_id=p.formation_id AND u.groupe_nom=g.groupe_nom AND p.formation_id=f.formation_id AND u.nom=?").append(
                 "SELECT * FROM utilisateur u, formation f WHERE p.formation_id=u.formation_id AND nom=?").append(limit);
         return searchByName(sql.toString(), name, false);
@@ -271,7 +272,7 @@ public class SearchDAO {
     public ArrayList<Utilisateur> findByFirstName(String name) throws SQLException {
         assert name != null && !name.equals("");
         StringBuffer sql = new StringBuffer();
-        sql.append("SELECT * FROM utilisateur u, promotion p, groupe g, formation f WHERE ").append(
+        sql.append("SELECT * FROM utilisateur u, promotion p, groupe g, formation f WHERE ").append(mandatory).append(
                 "u.formation_id=p.formation_id AND u.groupe_nom=g.groupe_nom AND p.formation_id=f.formation_id AND u.nom=?").append(
                 "SELECT * FROM utilisateur u, formation f WHERE p.formation_id=u.formation_id AND prenom=?").append(limit);
         return searchByName(sql.toString(), name, false);
@@ -289,7 +290,7 @@ public class SearchDAO {
      */
     public int countByLastName(String name) throws SQLException {
         assert name != null && !name.equals("");
-        String sql = "SELECT COUNT(*) AS count_element FROM utilisateur u, promotion p, groupe g, formation f WHERE "
+        String sql = "SELECT COUNT(*) AS count_element FROM utilisateur u, promotion p, groupe g, formation f WHERE "+mandatory
                 + "u.formation_id=p.formation_id AND u.groupe_nom=g.groupe_nom AND p.formation_id=f.formation_id AND u.nom=?";
 
         ArrayList res = searchByName(sql.toString(), name, true);
@@ -309,7 +310,7 @@ public class SearchDAO {
      */
     public int countByFirstName(String name) throws SQLException {
         assert name != null && !name.equals("");
-        String sql = "SELECT COUNT(*) AS count_element FROM utilisateur u, promotion p, groupe g, formation f WHERE "
+        String sql = "SELECT COUNT(*) AS count_element FROM utilisateur u, promotion p, groupe g, formation f WHERE " + mandatory
                 + "u.formation_id=p.formation_id AND u.groupe_nom=g.groupe_nom AND p.formation_id=f.formation_id AND u.prenom=?";
         ArrayList res = searchByName(sql.toString(), name, true);
         int count = res.size() > 0 ? (Integer) res.get(0) : 0;
@@ -446,7 +447,7 @@ public class SearchDAO {
 
         try {
             connect = TrombiConnection.getInstance();
-            String sql = "SELECT COUNT(*) AS count_element FROM utilisateur u, promotion p, groupe g, formation f WHERE "
+            String sql = "SELECT COUNT(*) AS count_element FROM utilisateur u, promotion p, groupe g, formation f WHERE " + mandatory
                     + "u.formation_id=p.formation_id AND u.groupe_nom=g.groupe_nom AND p.formation_id=f.formation_id AND u.sex=?" + limit;
 
             pstm = connect.prepareStatement(sql);
@@ -504,7 +505,7 @@ public class SearchDAO {
                 sql.append("SELECT COUNT(*) AS count_elements ");
             }
             
-            sql.append("FROM utilisateur u, promotion p, formation f, groupe g WHERE ").
+            sql.append("FROM utilisateur u, promotion p, formation f, groupe g WHERE ").append(this.mandatory).
                 append("u.login=p.login AND p.formation_id=f.formation_id AND g.groupe_nom=u.groupe_nom").
                 append(" AND p.session=?");
 
@@ -610,7 +611,7 @@ public class SearchDAO {
         Connection connect = null;
         try {
             connect = TrombiConnection.getInstance();
-            String sql = "SELECT * AS count_element FROM utilisateur u, promotion p, groupe g, formation f WHERE "
+            String sql = "SELECT * AS count_element FROM utilisateur u, promotion p, groupe g, formation f WHERE " + mandatory
                     + "u.formation_id=p.formation_id AND u.groupe_nom=g.groupe_nom AND p.formation_id=f.formation_id AND u.formation_id=?" + limit;
 
             pstm = connect.prepareStatement(sql);
@@ -640,7 +641,7 @@ public class SearchDAO {
         Connection connect = null;
         try {
             connect = TrombiConnection.getInstance();
-            String sql = "SELECT * AS count_element FROM utilisateur u, promotion p, groupe g, formation f WHERE "
+            String sql = "SELECT * AS count_element FROM utilisateur u, promotion p, groupe g, formation f WHERE " + mandatory
                     + "u.formation_id=p.formation_id AND u.groupe_nom=g.groupe_nom AND p.formation_id=f.formation_id " + limit;
 
             pstm = connect.prepareStatement(sql);
