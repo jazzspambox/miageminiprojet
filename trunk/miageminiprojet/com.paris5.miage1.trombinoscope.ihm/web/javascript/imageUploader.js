@@ -28,7 +28,7 @@ function croper ($){
         if (parseInt(c.w) > 0)
         {
             var rx = 100 / c.w;
-            var ry = 120 / c.h;
+            var ry = 130 / c.h;
 
             $('#preview').css({
                 width: Math.round(rx * boundx) + 'px',
@@ -52,7 +52,7 @@ function croper ($){
             $('#x').val(c.x);
             $('#y').val(c.y);
             $('#x2').val(c.x2);
-            $('#y2').val(c.y2);
+            $('#y2').val((c.y2*130)/100);
             $('#w').val(c.w);
             $('#h').val(c.h);
     };
@@ -67,7 +67,7 @@ function croper ($){
     var settings = {
         "action"        : "send_photo",
         "asynchronious" : "true",
-        target          : ["preview", "profilPhoto"],
+        target          : ["preview", "profilPhoto","photo_url"],
         url             : "trombinoscope",
         file_elem       : "file",
         loading         : "images/loading.gif"
@@ -83,6 +83,9 @@ function croper ($){
                 $.extend(settings, opt);
         },
         
+        /**
+         *
+         */
         progress: function(){
             for(i=0; i<settings.target.length; i++){
                 $("#"+settings.target[i]).attr("src",settings.loading); 
@@ -95,7 +98,10 @@ function croper ($){
         completed: function(){
             if(result!=null){
                 for(i=0; i<settings.target.length; i++){
-                    $("#"+settings.target[i]).attr("src",result);      
+                    if($("#"+settings.target[i]).is("img"))
+                        $("#"+settings.target[i]).attr("src",result);
+                    else
+                       $("#"+settings.target[i]).attr("value", result); 
                 }
             }
             if(jcrop_api!=null)
