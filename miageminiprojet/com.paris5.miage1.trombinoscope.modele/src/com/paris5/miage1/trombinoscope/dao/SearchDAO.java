@@ -522,7 +522,7 @@ public class SearchDAO {
         ArrayList users = new ArrayList();
         PreparedStatement pstm = null;
         Connection connect = null;
-
+ 
         try {
             connect = TrombiConnection.getInstance();
             StringBuffer sql = new StringBuffer();
@@ -533,20 +533,20 @@ public class SearchDAO {
             }
             
             sql.append("FROM utilisateur u, promotion p, formation f, groupe g WHERE ").append(this.mandatory).
-                append("u.login=p.login AND p.formation_id=f.formation_id AND g.groupe_nom=u.groupe_nom").
+                append(" u.login=p.login AND p.formation_id=f.formation_id AND g.groupe_nom=u.groupe_nom").
                 append(" AND p.session=?");
-
+  
             if (formation != null) {
                 sql.append(" AND p.formation_id=?");
             }
-
+           
             if (sex != BOTH) {
                 sql.append(" AND sex =?");
             }
             if (!count) {
                 sql.append(' ').append(limit);
             }
-            
+                 
             pstm = connect.prepareStatement(sql.toString());            
             pstm.setInt(1, session);
             int i=2;
