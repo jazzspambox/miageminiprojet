@@ -17,7 +17,7 @@ public class Valideur {
      */
     public static int getNumeric(String parameter, int defaut) {
         String res = cleanparameter("^[^0-9]*$", parameter, null);
-        if (res!=null)
+        if (res!=null&& !res.equals(""))
             return (int) Float.parseFloat(res);
         
         return defaut;
