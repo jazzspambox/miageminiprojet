@@ -136,24 +136,28 @@ public class SearchDAO {
      * @return Utilisateur
      * @throws SQLException 
      */
-    public Utilisateur findByEmail(String email) throws SQLException {
+    public ArrayList<Utilisateur> findByEmail(String email, int formation_id) throws SQLException {
         assert email != null && !email.equals("");
 
-        Utilisateur usr = null;
+        ArrayList usr = new ArrayList();
         PreparedStatement pstm = null;
         ResultSet res = null;
         Connection connect = null;
-
+        StringBuffer where=new StringBuffer(" UPPER(u.email) like ?");
+        if(formation_id!=0){
+            where.append("AND p.formation_id="+formation_id);
+        }
         try {
             connect = TrombiConnection.getInstance();
-            String sql = "SELECT * FROM utilisateur u, promotion p, groupe g, formation f WHERE " + mandatory
-                    + "u.formation_id=p.formation_id AND u.groupe_nom=g.groupe_nom AND p.formation_id=f.formation_id AND u.email=?";
+            String sql = "SELECT DISTINCT u.*, p.session, g.* FROM utilisateur u, promotion p, groupe g, formation f WHERE "+ mandatory
+                    + "u.login=p.login AND u.groupe_nom=g.groupe_nom AND p.formation_id=f.formation_id AND"+where.toString()+limit;
 
             pstm = connect.prepareStatement(sql);
-            pstm.setString(1, email);
+            pstm.setString(1, "%"+email.toUpperCase()+"%");
             res = pstm.executeQuery();
             if (res.next()) {
-                usr = buildUser(res);
+                
+                usr.add(buildUser(res));
             }
         } finally {
             TrombiConnection.closeAll(connect, pstm, res);
@@ -172,28 +176,32 @@ public class SearchDAO {
      * @return Utilisateur
      * @throws SQLException 
      */
-    public Utilisateur findByEtudiantId(String id) throws SQLException {
+ public ArrayList<Utilisateur> findByEtudiantId(String id, int formation_id) throws SQLException {
         assert id != null && !id.equals("");
-        Utilisateur usr = null;
+        ArrayList<Utilisateur> users =new ArrayList<Utilisateur>() ;
         PreparedStatement pstm = null;
         ResultSet res = null;
         Connection connect = null;
-
+        StringBuffer where=new StringBuffer("AND u.num_etudiant like ?");
+        if(formation_id!=0){
+            where.append("AND formation_id="+formation_id);
+        }
         try {
             connect = TrombiConnection.getInstance();
-            String sql = "SELECT * FROM utilisateur u, promotion p, groupe g, formation f WHERE " + mandatory
-                    + "u.formation_id=p.formation_id AND u.groupe_nom=g.groupe_nom AND p.formation_id=f.formation_id AND u.num_etudiant=?";
+            String sql = "SELECT * FROM utilisateur u, promotion p, groupe g, formation f WHERE "+mandatory
+                    + "u.login=p.login AND u.groupe_nom=g.groupe_nom AND p.formation_id=f.formation_id "+where.toString();
             pstm = connect.prepareStatement(sql);
-            pstm.setString(1, id);
+            pstm.setString(1, "%"+id+"%");
             res = pstm.executeQuery();
             if (res.next()) {
-                usr = buildUser(res);
+               Utilisateur usr = buildUser(res);
+               users.add(usr);
             }
         } finally {
             TrombiConnection.closeAll(connect, pstm, res);
         }
 
-        return usr;
+        return users;
     }
 
     /**
@@ -207,31 +215,44 @@ public class SearchDAO {
      * @return ArrayList<Utilisateur>
      * @throws SQLException 
      */
-    public ArrayList<Utilisateur> findByPhone(String phone, boolean cellular) throws SQLException {
+     public ArrayList<Utilisateur> findByPhone(String phone, boolean cellular, int formation_id, boolean count) throws SQLException {
         assert phone != null && !phone.equals("");
         Utilisateur usr = null;
         ResultSet res = null;
-        ArrayList users = null;
+        ArrayList users = new ArrayList();
         PreparedStatement pstm = null;
         Connection connect = null;
 
         try {
             connect = TrombiConnection.getInstance();
-            String where = "telephone";
+            StringBuffer sql = new StringBuffer("SELECT * ");
+            if(count)
+                sql.append("SELECT count(*)"); 
+            StringBuffer where ;
             if (cellular) {
-                where = "mobile";
+                where = new StringBuffer("mobile=?");
             }
-            String sql = "SELECT * FROM utilisateur u, promotion p, groupe g, formation f WHERE " + mandatory
-                    + "u.formation_id=p.formation_id AND u.groupe_nom=g.groupe_nom AND p.formation_id=f.formation_id AND "
-                    + where + "=?" + limit;
-            pstm = connect.prepareStatement(sql);
+            else
+                where=new StringBuffer("telephone=?");
+            if(formation_id!=0)
+                where.append("AND p.formation_id="+ formation_id);
+            
+             sql.append("FROM utilisateur u, promotion p, groupe g, formation f WHERE "+mandatory
+                    + "u.login=p.login AND u.groupe_nom=g.groupe_nom AND p.formation_id=f.formation_id AND "
+                    + where.toString()+ limit);
+            pstm = connect.prepareStatement(sql.toString());
             pstm.setString(1, phone);
             res = pstm.executeQuery();
-            while (res.next()) {
-                usr = buildUser(res);
-                if (usr != null) {
+            if(!count){
+                while (res.next()) {
+                    usr = buildUser(res);
+                    if (usr != null) {
                     users.add(usr);
-                }
+                    }
+                 }
+            }
+            else{
+                users.add(res.getInt(1));
             }
         } finally {
             TrombiConnection.closeAll(connect, pstm, res);
@@ -250,13 +271,16 @@ public class SearchDAO {
      * @return
      * @throws SQLException 
      */
-    public ArrayList<Utilisateur> findByLastName(String name) throws SQLException {
+     public ArrayList<Utilisateur> findByLastName(String name, int formation_id) throws SQLException {
         assert name != null && !name.equals("");
         StringBuffer sql = new StringBuffer();
-        sql.append("SELECT * FROM utilisateur u, promotion p, groupe g, formation f WHERE ").append(mandatory).append(
-                "u.formation_id=p.formation_id AND u.groupe_nom=g.groupe_nom AND p.formation_id=f.formation_id AND u.nom=?").append(
-                "SELECT * FROM utilisateur u, formation f WHERE p.formation_id=u.formation_id AND nom=?").append(limit);
-        return searchByName(sql.toString(), name, false);
+        StringBuffer where=new StringBuffer("UPPER(u.nom) like ?");
+        if(formation_id!=0){
+            where.append("AND p.formation_id="+formation_id);
+        }
+        sql.append("SELECT DISTINCT u.*, g.* FROM utilisateur u, promotion p, groupe g, formation f WHERE ").append(
+               mandatory +"u.groupe_nom=g.groupe_nom AND f.formation_id=p.formation_id AND u.login=p.login  AND  ").append(where).append(limit);
+        return searchByName(sql.toString(), name.toUpperCase(), false);
     }
 
     /**
@@ -269,13 +293,16 @@ public class SearchDAO {
      * @return
      * @throws SQLException 
      */
-    public ArrayList<Utilisateur> findByFirstName(String name) throws SQLException {
+    public ArrayList<Utilisateur> findByFirstName(String name, int formation_id) throws SQLException {
         assert name != null && !name.equals("");
         StringBuffer sql = new StringBuffer();
-        sql.append("SELECT * FROM utilisateur u, promotion p, groupe g, formation f WHERE ").append(mandatory).append(
-                "u.formation_id=p.formation_id AND u.groupe_nom=g.groupe_nom AND p.formation_id=f.formation_id AND u.nom=?").append(
-                "SELECT * FROM utilisateur u, formation f WHERE p.formation_id=u.formation_id AND prenom=?").append(limit);
-        return searchByName(sql.toString(), name, false);
+        StringBuffer where=new StringBuffer("UPPER(u.prenom) like ?");
+        if(formation_id!=0){
+            where.append("AND p.formation_id="+formation_id);
+        }
+        sql.append("SELECT DISTINCT u.*, g.* FROM utilisateur u, promotion p, groupe g, formation f WHERE ").append(
+               mandatory+ "u.groupe_nom=g.groupe_nom AND f.formation_id=p.formation_id AND u.login=p.login  AND  ").append(where).append(limit);;
+        return searchByName(sql.toString(), name.toUpperCase(), false);
     }
 
     /**
@@ -291,7 +318,7 @@ public class SearchDAO {
     public int countByLastName(String name) throws SQLException {
         assert name != null && !name.equals("");
         String sql = "SELECT COUNT(*) AS count_element FROM utilisateur u, promotion p, groupe g, formation f WHERE "+mandatory
-                + "u.formation_id=p.formation_id AND u.groupe_nom=g.groupe_nom AND p.formation_id=f.formation_id AND u.nom=?";
+                + "u.login=p.login AND u.groupe_nom=g.groupe_nom AND p.formation_id=f.formation_id AND u.nom=?";
 
         ArrayList res = searchByName(sql.toString(), name, true);
         int count = res.size() > 0 ? (Integer) res.get(0) : 0;
@@ -311,7 +338,7 @@ public class SearchDAO {
     public int countByFirstName(String name) throws SQLException {
         assert name != null && !name.equals("");
         String sql = "SELECT COUNT(*) AS count_element FROM utilisateur u, promotion p, groupe g, formation f WHERE " + mandatory
-                + "u.formation_id=p.formation_id AND u.groupe_nom=g.groupe_nom AND p.formation_id=f.formation_id AND u.prenom=?";
+                + "u.login=p.login AND u.groupe_nom=g.groupe_nom AND p.formation_id=f.formation_id AND u.prenom=?";
         ArrayList res = searchByName(sql.toString(), name, true);
         int count = res.size() > 0 ? (Integer) res.get(0) : 0;
         return count;
@@ -573,7 +600,8 @@ public class SearchDAO {
         try {
             connect = TrombiConnection.getInstance();
             pstm = connect.prepareStatement(sql);
-            pstm.setString(1, tag);
+            System.out.println(sql);
+            pstm.setString(1, "%"+tag+"%");
             res = pstm.executeQuery();
             if (!count) {
                 while (res.next()) {
@@ -583,7 +611,9 @@ public class SearchDAO {
                     }
                 }
             } else {
+                if(res.next()){
                 users.add(res.getInt("count_element"));
+                }
             }
 
         } finally {
@@ -592,6 +622,7 @@ public class SearchDAO {
 
         return users;
     }
+
 
     /**
      * Méthode de recherche par formation
@@ -667,7 +698,7 @@ public class SearchDAO {
      * @return Utilisateur
      * @throws SQLException 
      */
-    private Utilisateur buildUser(ResultSet res) throws SQLException {
+     private Utilisateur buildUser(ResultSet res) throws SQLException {
         assert res != null;
         Utilisateur usr = null;
         usr = new Utilisateur();
@@ -687,13 +718,7 @@ public class SearchDAO {
         usr.setNumEtudiant(res.getString("num_etudiant"));
         Groupe groupe = new Groupe(res.getString("groupe_nom"), res.getString("description"));
         usr.setGroupe(groupe);
-        Formation formation = new Formation(
-                res.getInt("formation_id"),
-                res.getString("f.libelle"),
-                res.getString("f.type"),
-                res.getInt("p.session"),
-                res.getString("f.email")
-                );
+        Formation formation = findUserPromo(usr.getLogin());
         usr.setFormation(formation);
         assert usr != null;
         return usr;
