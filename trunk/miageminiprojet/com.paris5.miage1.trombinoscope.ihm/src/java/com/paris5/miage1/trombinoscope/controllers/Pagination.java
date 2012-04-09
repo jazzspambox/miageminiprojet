@@ -77,6 +77,8 @@ public class Pagination implements Zone {
     private void init(int currentPage, double nb){
         nombrePages = (int) Math.ceil(nb/Configuration.PROFILS_PAR_PAGE);
         minimum = (this.nombrePages - 1) * Configuration.PROFILS_PAR_PAGE;
+        if(minimum<0)
+            minimum=0;
         this.currentPage = currentPage;
     }
     
