@@ -58,9 +58,8 @@ public class Recherche extends ZoneManager {
         Liste users = null;
         int userCount = 0;
         int search_type=Valideur.getNumeric(request.getParameter("search_type"),0);
-        System.out.println(formation_id);
                 Pagination p=null;
-        if(formation_id==0){
+        if(formation_id==0 && serach_value.equals("recherche")){
             search_type=7;
         }else{
             if(serach_value.equals("recherche")||serach_value.equals("")){
