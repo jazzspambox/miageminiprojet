@@ -241,7 +241,7 @@ public class SearchDAO {
                     + "u.login=p.login AND u.groupe_nom=g.groupe_nom AND p.formation_id=f.formation_id AND "
                     + where.toString()+ limit);
             pstm = connect.prepareStatement(sql.toString());
-            pstm.setString(1, phone);
+            pstm.setString(1, "%"+phone+"%");
             res = pstm.executeQuery();
             if(!count){
                 while (res.next()) {
