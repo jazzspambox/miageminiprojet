@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import com.paris5.miage1.trombinoscope.bean.Utilisateur;
 import com.paris5.miage1.trombinoscope.dao.SearchDAO;
 import com.paris5.miage1.trombinoscope.processor.Module;
@@ -40,12 +41,12 @@ public class Authentification extends Module {
     private boolean authentification(String login, String pwd) throws SQLException {
         
         session = request.getSession(false);
-        Utilisateur usr;
+        
         SearchDAO search = new SearchDAO();
-        usr = search.findByLoginPassword(request.getParameter("login"), request.getParameter("pwd"));
-        if (usr != null) {
+        user = search.findByLoginPassword(request.getParameter("login"), request.getParameter("pwd"));
+        if (user != null) {
             session = request.getSession();
-            session.setAttribute("user", usr);
+           session.setAttribute("user", user);
             return true;
         }
         
@@ -77,8 +78,18 @@ public class Authentification extends Module {
         
         switch(Action.valueOf(request.getParameter("action").toUpperCase())){
             case AUTHENT :
+                 
                 if(login != null && pwd != null && authentification(login, pwd)) {
-                    request.setAttribute("action", "DEFAULT");
+                    //request.setAttribute("action", "DEFAULT");
+                    
+                   if (user.getGroupe().getNom().toUpperCase().equals("ETUDIANT")) {
+                      request.setAttribute("search_type", 0);
+                      } 
+                     else 
+                        {
+                           request.setAttribute("search_type", 7);
+                          }
+                   
                     Module module = new Recherche(request, response);
                     module.run();
                 }
