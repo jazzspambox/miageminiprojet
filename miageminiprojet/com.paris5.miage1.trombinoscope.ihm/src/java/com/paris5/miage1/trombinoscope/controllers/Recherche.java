@@ -22,15 +22,28 @@ public class Recherche extends ZoneManager {
     private int currentSession;
     private int page;
     private int formation_id;
+    private int formation_session;
+    private String serach_value="";
 
     public Recherche(HttpServletRequest request, HttpServletResponse response) throws SQLException, NullPointerException, ServletException, IOException {
         super(true, request, response);
         String format = "yyyy";
         java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
         java.util.Date date = new java.util.Date();
+        
         currentSession = Integer.parseInt(formater.format(date));
         page = Valideur.getNumeric(request.getParameter("page"), 1);
-        formation_id=Valideur.getNumeric(request.getParameter("search_promo"),0);
+        if(request.getParameter("search_promo")!=null){
+          formation_id=Valideur.getNumeric(request.getParameter("search_promo").substring(0,request.getParameter("search_promo").indexOf("|")),0);
+          formation_session=Valideur.getNumeric(request.getParameter("search_promo").substring(request.getParameter("search_promo").indexOf("|")+1),currentSession);
+        }else{
+            formation_id=user.getFormation().getId();
+            formation_session=currentSession;
+        
+             }
+        if(request.getParameter("serach_value")!=null){
+            serach_value=request.getParameter("serach_value");
+        }
     }
 
     private Filtre getFilter() {
@@ -44,19 +57,26 @@ public class Recherche extends ZoneManager {
         SearchDAO search = new SearchDAO();
         Liste users = null;
         int userCount = 0;
-        int search_type=Valideur.getNumeric(request.getParameter("search_type"));
-        String serach_value=request.getParameter("serach_value");
-        System.out.println("Type="+search_type);
-        System.out.println("Param"+serach_value);
-         Pagination p=null;
+        int search_type=Valideur.getNumeric(request.getParameter("search_type"),0);
+        System.out.println(formation_id);
+                Pagination p=null;
+        if(formation_id==0){
+            search_type=7;
+        }else{
+            if(serach_value.equals("recherche")||serach_value.equals("")){
+               search_type=0;
+            }
+          }
+        
+        
         switch (search_type) {
             case 0:
-                 userCount = search.countByPromo(String.valueOf(user.getFormation().getId()), currentSession);
+                 userCount = search.countByPromo(String.valueOf(formation_id), formation_session);
                     if (userCount > 0) {
                          p = new Pagination(page, userCount);
                         this.addZone(p);
                         search.setLimit(p.getMinimum(), Configuration.PROFILS_PAR_PAGE);
-                        users = new Liste (search.findByPromo(String.valueOf(user.getFormation().getId()), currentSession));
+                        users = new Liste (search.findByPromo(String.valueOf(formation_id), formation_session));
                     }
                 break;
             case 1:
@@ -103,7 +123,7 @@ public class Recherche extends ZoneManager {
                     users = new Liste(search.findByEtudiantId(serach_value, formation_id));
                     break;
                case 7:
-                userCount = 1;
+                userCount = search.countAllPromo(currentSession);
                     if (userCount > 0) {
                         p = new Pagination(page, userCount);
                         this.addZone(p);
