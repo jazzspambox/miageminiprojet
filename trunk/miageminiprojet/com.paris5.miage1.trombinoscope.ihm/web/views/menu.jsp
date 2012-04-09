@@ -8,7 +8,8 @@
                 <a href="/" title="Home"><!-- --></a>
             </div>
             <div id="search" class="search" >
-                <form ation="" method="post">
+                <form ation="trombinoscope" method="post">
+                    <input type="hidden" name="action" value="search"/>
                     <input id="search_box" type="text" name="serach_value" value="recherche" size="40" 
                            onblur="javascript:autoSelect(this); inputBehaviour('search_box', 'recherche');" 
                            onkeyup="javascript:autoSelect(this);" 
