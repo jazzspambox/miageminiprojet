@@ -17,7 +17,7 @@
                            onfocus="javascript:inputBehaviour('search_box', 'recherche');" />
                     <jsp:useBean id="formation" class="com.paris5.miage1.trombinoscope.bean.Formation" scope="page" />
                     <select id="search_promo" class="search_promo" name="search_promo">
-                        <option>toutes les formations</option>
+                        <option value="0">toutes les formations</option>
                         <%
                         ArrayList<Formation> formations = (ArrayList<Formation>) request.getAttribute("formations");
                         for(i=0; i<formations.size(); i++){ 
