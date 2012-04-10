@@ -19,6 +19,7 @@
  ------------------------------------------------------------------------ */
 package com.paris5.miage1.trombinoscope.processor;
 
+import com.paris5.miage1.trombinoscope.bean.Droit;
 import com.paris5.miage1.trombinoscope.bean.Utilisateur;
 import com.paris5.miage1.trombinoscope.dao.FormationDAO;
 import com.paris5.miage1.trombinoscope.utils.Action;
