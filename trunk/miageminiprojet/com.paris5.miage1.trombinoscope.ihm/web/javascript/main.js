@@ -12,23 +12,17 @@ function autoSelect(elem, elements)
     var matched  = false;
     var text     = elem.value;
     var choice   = {
-        prenom: 2,
-        mobile: 3,
-        fixe: 4,
-        email: 5
+        mobile: "search_mobile",
+        fixe: "search_fixe",
+        email: "search_email"
         
     };
-    var elements = document.getElementById('search_filter').getElementsByTagName('input');
+    var elements = document.getElementById(elements).getElementsByTagName('input');
 	
     if(text.match(/@/))
     {
         matched = true;
         value = choice.email;
-    }
-    else if(text.match(/^[A-Z]{3}_[0-9]+\.[0-9]+/))
-    {
-        matched = true;
-        value = choice.payment;
     }
     else if(text.match(/^06([-. ]?[0-9]{2}){4}$/))
     {
@@ -56,7 +50,7 @@ function autoSelect(elem, elements)
     }
 }
 
-var oldString ={};
+var oldString = new Array;
 function inputBehaviour(id, txt){
     var input = document.getElementById(id);
     if(input.value == txt){
@@ -65,5 +59,12 @@ function inputBehaviour(id, txt){
     }
     else if(input.value==''){
        input.value = oldString[id];
+    }
+}
+
+function checkSubmit(id, defaut){
+    var input = document.getElementById(id);
+    if(oldString[id]==input.value || input.value == defaut ){
+        input.value = '';
     }
 }
