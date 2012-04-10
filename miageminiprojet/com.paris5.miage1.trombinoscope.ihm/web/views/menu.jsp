@@ -5,14 +5,15 @@
     <body>
         <div id="header">
             <div id="logo">
-                <a href="/" title="Home"><!-- --></a>
+                <a href="trombinoscope?action=search" title="Home"><!-- --></a>
             </div>
             <div id="search" class="search" >
-                <form ation="trombinoscope" method="post">
+                <form ation="trombinoscope" method="post" onsubmit="checkSubmit('search_box','recherche')">
+                    <input type="hidden" name="promo_label" value="" />
                     <input type="hidden" name="action" value="search"/>
                     <input id="search_box" type="text" name="serach_value" value="recherche" size="40" 
-                           onblur="javascript:autoSelect(this); inputBehaviour('search_box', 'recherche');" 
-                           onkeyup="javascript:autoSelect(this);" 
+                           onblur="javascript:autoSelect(this, 'search_filter'); inputBehaviour('search_box', 'recherche');" 
+                           onkeyup="javascript:autoSelect(this, 'search_filter');" 
                            onfocus="javascript:inputBehaviour('search_box', 'recherche');" />
                     <jsp:useBean id="formation" class="com.paris5.miage1.trombinoscope.bean.Formation" scope="page" />
                     <select id="search_promo" class="search_promo" name="search_promo">
@@ -23,19 +24,19 @@
                             formation = formations.get(i);
                             pageContext.setAttribute("formation", formation);
                         %>  
-                        <option value="<jsp:getProperty name="formation" property="id" />">
+                        <option value="<jsp:getProperty name="formation" property="id" />-<jsp:getProperty name="formation" property="session" />">
                             <jsp:getProperty name="formation" property="label" />
                         </option>
                         <% } %>
                     </select>
-                    <input type="submit" class="blue_btn submit_btn" value="ok"  />
+                    <input type="submit" class="blue_btn submit_btn" value="ok" />
                     <div id="search_filter" class="search_filter">
-                        <input type="radio" name="search_type" value="1" /> Nom
-                        <input type="radio" name="search_type" value="2" checked="checked" /> Prenom
-                        <input type="radio" name="search_type" value="3" /> Telephonne mobile
-                        <input type="radio" name="search_type" value="4" /> Telephonne fixe
-                        <input type="radio" name="search_type" value="5" /> Email
-                        <input type="radio" name="search_type" value="6" /> Num-etudiant
+                        <input type="radio" name="type" value="search_nom" /> Nom
+                        <input type="radio" name="type" value="search_prenom" checked="checked" /> Prenom
+                        <input type="radio" name="type" value="search_mobile" /> Telephonne mobile
+                        <input type="radio" name="type" value="search_fixe" /> Telephonne fixe
+                        <input type="radio" name="type" value="search_email" /> Email
+                        <input type="radio" name="type" value="search_num_etudiant" /> Num-etudiant
                     </div>
                 </form>
             </div>
@@ -51,6 +52,7 @@
                     </li>
                     <li><a href="javascript:void(0);" ><span>Documentation</span></a>
                     </li>
+                    <li id="disconnect"><a href="trombinoscope?action=deconnect">Deconnexion</a></li>
                 </ul>
             </div>
         </div>
