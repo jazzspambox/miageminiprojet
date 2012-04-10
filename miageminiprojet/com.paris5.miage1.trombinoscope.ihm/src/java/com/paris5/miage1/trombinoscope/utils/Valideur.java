@@ -17,7 +17,7 @@ public class Valideur {
      */
     public static int getNumeric(String parameter, int defaut) {
         String res = cleanparameter("^[^0-9]*$", parameter, null);
-        if (res!=null&& !res.equals(""))
+        if (res!=null)
             return (int) Float.parseFloat(res);
         
         return defaut;
@@ -91,6 +91,25 @@ public class Valideur {
     
     /**
      * 
+     * @param parameter
+     * @param defaut
+     * @return 
+     */
+    public static String getLabel(String parameter, String defaut){
+        return cleanparameter("^[^a-zA-Z0-9_\\-\\(\\)\\@\\.]*$", parameter, defaut);
+    }
+    
+    /**
+     * 
+     * @param parameter
+     * @param defaut
+     * @return 
+     */
+    public static String getLabel(String parameter){
+        return getLabel(parameter, null);
+    }
+    /**
+     * 
      * @param email
      * @return 
      */
@@ -134,6 +153,7 @@ public class Valideur {
      */
     private static String cleanparameter(String regexp, String parameter, String defaut){
         if(parameter!=null){
+            parameter.trim();
             parameter = parameter.replaceAll(regexp, "");
             return parameter;
         }

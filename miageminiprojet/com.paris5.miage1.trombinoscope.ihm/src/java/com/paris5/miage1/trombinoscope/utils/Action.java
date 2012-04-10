@@ -29,6 +29,8 @@ public enum Action {
     SEARCH_FIXE,
     SEARCH_MOBILE,
     SEARCH_PROMOTION,
+    SEARCH_EMAIL,
+    SEARCH_NUM_ETUDIANT,
     DEFAULT;
 
     /**

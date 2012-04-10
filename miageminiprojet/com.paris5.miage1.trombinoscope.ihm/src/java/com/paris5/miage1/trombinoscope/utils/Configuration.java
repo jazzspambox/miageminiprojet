@@ -10,7 +10,7 @@ package com.paris5.miage1.trombinoscope.utils;
  */
 public class Configuration {
     
-    static public final int PROFILS_PAR_PAGE = 40;
+    static public final int PROFILS_PAR_PAGE = 12;
     static public final int PAGINATION_POINTILLES = 6;
     static public final int DEBUT_INSCRIPTION = 05;
     
