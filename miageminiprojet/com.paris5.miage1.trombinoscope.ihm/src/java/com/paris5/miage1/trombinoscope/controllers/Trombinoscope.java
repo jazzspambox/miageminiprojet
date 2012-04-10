@@ -72,6 +72,7 @@ public final class Trombinoscope extends HttpServlet {
                 case CREATE_USER:
                 case SEND_PHOTO:
                 case SHOW_USER:
+                case DELETE_USER :
                     module = new UtilisateurManager(request, response);
                     break;
                 case SEARCH:
