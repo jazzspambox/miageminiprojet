@@ -4,6 +4,7 @@
  */
 package com.paris5.miage1.trombinoscope.dao;
 
+import com.paris5.miage1.trombinoscope.bean.Droit;
 import com.paris5.miage1.trombinoscope.bean.Formation;
 import com.paris5.miage1.trombinoscope.bean.Groupe;
 import com.paris5.miage1.trombinoscope.bean.Utilisateur;
@@ -75,10 +76,13 @@ public class SearchDAO {
                 usr.setFormation(findUserPromo(login));
                 Groupe groupe = new Groupe(res.getString("groupe_nom"),"");
                 ArrayList droits = new ArrayList();
-                droits.add(res.getString("gd.nom"));
+                Droit d= new Droit(res.getString("gd.nom"), "");
+                droits.add(d);
                 while(res.next()){
-                    droits.add(res.getString("gd.nom"));
+                    d= new Droit(res.getString("gd.nom"), "");
+                    droits.add(d);
                 }
+                groupe.setDroits(droits);
                 usr.setGroupe(groupe);
             }
         } 

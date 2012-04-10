@@ -286,10 +286,10 @@ public class UtilisateurDAO extends TrombiDAO<Utilisateur> {
         Connection connect=null;
         try {
             connect = TrombiConnection.getInstance();
-            String sql ="SELECT * FROM utilisateur u, promotion p, groupe g, formation f WHERE "
+            String sql ="SELECT DISTINCT * FROM utilisateur u, promotion p, groupe g, formation f WHERE "
                     + "u.login=p.login AND "
                     + "u.groupe_nom=g.groupe_nom AND "
-                    + "p.formation_id=f.formation_id AND u.login=?";
+                    + "p.formation_id=f.formation_id AND UPPER(u.login)=UPPER(?)";
             
             pstm = connect.prepareStatement(sql);
             pstm.setString(1, id);
