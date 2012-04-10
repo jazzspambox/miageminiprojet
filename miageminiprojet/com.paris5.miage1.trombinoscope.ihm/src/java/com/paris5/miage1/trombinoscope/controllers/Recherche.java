@@ -94,6 +94,7 @@ public class Recherche extends ZoneManager {
             filtre.setLabel(promoLabel);
             filtre.setRecherche(searchValue);
             filtre.setSession(session);
+            page = 1;
         }
         filtre.setPage(page);
     }
