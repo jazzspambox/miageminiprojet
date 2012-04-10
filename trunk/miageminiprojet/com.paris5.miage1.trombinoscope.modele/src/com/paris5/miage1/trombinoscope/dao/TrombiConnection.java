@@ -40,7 +40,7 @@ public class TrombiConnection {
     static{
         try {
             Class.forName(DRIVER_NAME).newInstance();
-            System.out.println("*** Driver loaded.");
+            //System.out.println("*** Driver loaded.");
         }
         catch (ClassNotFoundException e) {
             System.err.println("*** ERROR: Driver " + DRIVER_NAME + " not found");
