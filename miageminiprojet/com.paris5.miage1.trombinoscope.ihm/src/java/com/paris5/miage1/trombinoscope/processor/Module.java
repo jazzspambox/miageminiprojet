@@ -1,7 +1,22 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+/* ------------------------------------------------------------------------
+ 
+    Licensed under the Educational Community License version 1.0
+
+    This Original Work, including software, source code, documents,
+    or other related items, is being provided by the copyright holder(s)
+    subject to the terms of the Educational Community License. By
+    obtaining, using and/or copying this Original Work, you agree that you
+    have read, understand, and will comply with the following terms and
+    conditions of the Educational Community License:
+
+    Permission to use, copy, modify, merge, publish, distribute, and
+    sublicense this Original Work and its documentation, with or without
+    modification, for any purpose, and without fee or royalty to the
+    copyright holder(s) is hereby granted, provided that you include the
+    following on ALL copies of the Original Work or portions thereof,
+    including modifications or derivatives.
+
+ ------------------------------------------------------------------------ */
 package com.paris5.miage1.trombinoscope.processor;
 
 import com.paris5.miage1.trombinoscope.bean.Utilisateur;
@@ -17,7 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Classe abstraite Observable
+ * module de l application initialise toutes les pages
  * @author Mourad, Saliou, Idir
  */
 public abstract class Module implements Processeur{
@@ -31,12 +46,19 @@ public abstract class Module implements Processeur{
     protected int currentSession;
     protected int currentMonth;
     protected int currentDay;
-    
-    //Utilisateur user;
-    //HttpSession session;
     protected HttpServletRequest request;
     protected HttpServletResponse response;
 
+    /**
+     * constructeur
+     * @param connectMode boolean page connctee ou non
+     * @param request requete envoyee
+     * @param response reponse attendu
+     * 
+     * @throws NullPointerException
+     * @throws ServletException
+     * @throws IOException 
+     */
     public Module(boolean connectMode, HttpServletRequest request, HttpServletResponse response) throws NullPointerException, ServletException, IOException {
         
         if(connectMode){
@@ -64,26 +86,53 @@ public abstract class Module implements Processeur{
         currentDay = Integer.valueOf(res[2]);
     }
 
+    /**
+     * informe du statut de connexion de la page
+     * @return vboolean
+     */
     public boolean isConnectMode() {
         return connectMode;
     }
 
+    /**
+     * retourne l actioneffectuee sur la page
+     * @return Action
+     */
     public Action getAction() {
         return action;
     }
 
+    /**
+     * return l ulisateur conncte
+     * @return Utilisateur
+     */
     public Utilisateur getUser() {
         return user;
     }
 
+    /**
+     * retourne le chemain de l application
+     * @return String
+     */
     public String getPath() {
         return path;
     }
 
+    /**
+     * retourne l url de l application
+     * @return String
+     */
     public String getUrl() {
         return url;
     }
     
+    /**
+     * declanche les traitement attendu
+     * 
+     * @throws SQLException
+     * @throws ServletException
+     * @throws IOException 
+     */
     public void run() throws SQLException, ServletException, IOException {
          if(connectMode && user==null){
             request.getRequestDispatcher("views/index.jsp").forward(request, response);
