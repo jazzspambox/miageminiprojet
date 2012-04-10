@@ -1,7 +1,23 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+/* ------------------------------------------------------------------------
+ 
+    Licensed under the Educational Community License version 1.0
+
+    This Original Work, including software, source code, documents,
+    or other related items, is being provided by the copyright holder(s)
+    subject to the terms of the Educational Community License. By
+    obtaining, using and/or copying this Original Work, you agree that you
+    have read, understand, and will comply with the following terms and
+    conditions of the Educational Community License:
+
+    Permission to use, copy, modify, merge, publish, distribute, and
+    sublicense this Original Work and its documentation, with or without
+    modification, for any purpose, and without fee or royalty to the
+    copyright holder(s) is hereby granted, provided that you include the
+    following on ALL copies of the Original Work or portions thereof,
+    including modifications or derivatives.
+
+ ------------------------------------------------------------------------ */
+
 package com.paris5.miage1.trombinoscope.utils;
 
 import java.awt.Graphics2D;
@@ -10,23 +26,25 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+/**
+ * Permet de redimentionner et de decouper une partie d une image
+ * @author Mourad, Saliou, Idir
+ */
 public class Photo {
     
     private int width;
     private int height;
-    
-    /**
-     * 
-     */
     File origine;
     File destination;
     private String image_ext;
 
     /**
+     * constructeur
      * 
-     * @param image_url
-     * @param image_dest
-     * @throws IOException 
+     * @param image_url String dossier de stockage des images
+     * @param image_dest nom de l image a travailler
+     * @param image_name nom de l image de
+     * @throws IOException  l image a generer
      */
     public Photo(String dir, String origine, String image_name) throws IOException {
         
@@ -40,9 +58,10 @@ public class Photo {
     }
 
     /**
+     * redimensionne une image
      * 
-     * @param targetWidth
-     * @param targetHeight
+     * @param targetWidth int largeur
+     * @param targetHeight int hauteur
      * @throws IOException 
      */
     public void resize(int targetWidth, int targetHeight) throws IOException {
@@ -63,21 +82,30 @@ public class Photo {
             this.height = result.getHeight();
         }
     }
-
+    
+    /**
+     * largeur de l image
+     * @return int
+     */
     public int getHeight() {
         return height;
     }
-
+    
+    /**
+     * hauteur de l image
+     * @return int
+     */
     public int getWidth() {
         return width;
     }
     
     /**
+     * decoupe l'image
      * 
-     * @param x
-     * @param y
-     * @param width
-     * @param height 
+     * @param x int position x point 1
+     * @param y int position y point 1
+     * @param x2 int position x point 2
+     * @param y2 int position y2 point 2
      */
     public void crop(int x, int y, int x2, int y2) throws IOException {
         BufferedImage img = ImageIO.read(origine);
@@ -88,6 +116,12 @@ public class Photo {
         }
     }
     
+    /**
+     * retourne l image genere
+     * 
+     * @return File
+     * @throws IOException 
+     */
     public File get() throws IOException{
         if(!destination.isFile()){
             destination.createNewFile();
