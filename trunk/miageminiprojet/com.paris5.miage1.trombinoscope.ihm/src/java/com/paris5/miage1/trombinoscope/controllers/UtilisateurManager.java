@@ -68,7 +68,6 @@ public class UtilisateurManager extends Module {
         request.setAttribute("profil", new Utilisateur());
 
         int limit = currentSession;
-        System.out.println(currentSession + " "+ currentMonth);
         if(currentMonth >= Configuration.DEBUT_INSCRIPTION)
             limit++;
         
@@ -324,7 +323,7 @@ public class UtilisateurManager extends Module {
                 }
                 break;
             case DELETE_USER :
-                String login = Valideur.getAlphaNumeric("id");
+                String login = Valideur.getAlphaNumeric(request.getParameter("id"));
                 if(login!=null && session.getAttribute("desactiver")!=null){
                     TrombiDAO dao = TrombiFactory.getUtilisateurDAO();
                     Utilisateur u = new Utilisateur();
@@ -332,9 +331,8 @@ public class UtilisateurManager extends Module {
                     dao.delete(u);
                 }
                 break;
-            
         }
-        System.out.println("action=" + this.getAction() + " target" + target);
+        
         if (target != null) {
             request.getRequestDispatcher(target).forward(request, response);
         }
