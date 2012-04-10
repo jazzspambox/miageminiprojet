@@ -11,7 +11,9 @@
                 <span class="nom"><jsp:getProperty name="profil" property="prenom" /> <jsp:getProperty name="profil" property="nom" /></span>
                 <span class="portable"><jsp:getProperty name="profil" property="mobile" /></span>
                 <span class="fixe"><jsp:getProperty name="profil" property="telephone" /></span>
+                <% if(session.getAttribute("infos")!=null){ %>
                 <span class="NumEtudiant"><jsp:getProperty name="profil" property="numEtudiant" /></span>
+                <% } %>
                 <span class="NumEtudiant"><jsp:getProperty name="profil" property="dateCreation" /></span>
                 <span class="email"><jsp:getProperty name="profil" property="email" /></span>
             </div>

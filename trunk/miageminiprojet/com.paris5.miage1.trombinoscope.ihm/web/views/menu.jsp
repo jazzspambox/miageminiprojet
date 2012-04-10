@@ -46,12 +46,16 @@
                     </li>
                     <li><a href="trombinoscope?action=show_user" ><span>Fiche</span></a>
                     </li>
+                    <% if(session.getAttribute("ajout")!=null){ %>
                     <li><a href="trombinoscope?action=create_user" ><span>Ajouter utilisateur</span></a>
                     </li>
-                    <li><a href="javascript:void(0);" ><span>Aide</span></a>
+                    <% } %>
+                    <li><a href="javascript:window.open('javadoc/install.pdf','trombi-documentation');" ><span>Aide</span></a>
                     </li>
+                    <% if(session.getAttribute("documentation")!=null){ %>
                     <li><a href="javascript:window.open('javadoc/index.html','trombi-documentation');" ><span>Documentation</span></a>
                     </li>
+                    <% } %>
                     <li id="disconnect"><a href="trombinoscope?action=deconnect">Deconnexion</a></li>
                 </ul>
             </div>
