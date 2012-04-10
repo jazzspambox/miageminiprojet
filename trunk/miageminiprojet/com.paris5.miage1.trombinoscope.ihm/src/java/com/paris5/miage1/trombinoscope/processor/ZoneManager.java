@@ -1,4 +1,6 @@
 package com.paris5.miage1.trombinoscope.processor;
+import com.paris5.miage1.trombinoscope.utils.Action;
+import com.paris5.miage1.trombinoscope.utils.Valideur;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,7 +18,9 @@ public abstract class ZoneManager extends Module {
      * liste des observateurs enregistres
      */
     protected ArrayList<Zone> trombiElements = new ArrayList();
-
+    
+    Action navigation;
+    
     /**
      * 
      * @param request
@@ -24,8 +28,10 @@ public abstract class ZoneManager extends Module {
      * @throws SQLException
      * @throws NullPointerException 
      */
-    public ZoneManager(boolean connect, HttpServletRequest request, HttpServletResponse response) throws NullPointerException, ServletException, IOException {       
+    public ZoneManager(boolean connect, HttpServletRequest request, HttpServletResponse response) 
+            throws NullPointerException, ServletException, IOException {       
         super(connect, request, response);
+        this.navigation = Action.get(Valideur.getAuthorized(request.getParameter("page")));
     }
     
     /**
@@ -97,7 +103,7 @@ public abstract class ZoneManager extends Module {
     public void goCurrent() {
         assert this.trombiElements.size() > 0;
         for(Zone el: trombiElements){
-            el.page(el.getCurrentPage());
+            el.current();
         }
     }
     
@@ -146,15 +152,12 @@ public abstract class ZoneManager extends Module {
      */
     @Override
     public void process() throws SQLException, ServletException, IOException{
-        switch(this.getAction()){
+        switch(this.navigation){
             case GO_NEXT_PAGE :
                 this.doNext();
             break;
             case GO_PRECEDENT_PAGE:
                 this.doPrecedent();
-            break;
-            case GO_PAGE:
-                this.goCurrent();
             break;
             case GO_FIRST_PAGE :
                  this.goFirstPage();
@@ -163,6 +166,9 @@ public abstract class ZoneManager extends Module {
             case GO_LAST_PAGE :
                 this.goLastPage();
                 break;
+                
+            default :
+                this.goCurrent();
         }
     }
 }
