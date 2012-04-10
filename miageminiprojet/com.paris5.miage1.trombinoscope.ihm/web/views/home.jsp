@@ -24,7 +24,9 @@
                              title="<jsp:getProperty name="utilisateur" property="prenom" />
                              <jsp:getProperty name="utilisateur" property="nom" />" />
                     </a>
-                    <a href="javascript:void(0);"><span class="remove_profil"></span></a>
+                    <% if(session.getAttribute("ajout")!=null){ %>
+                    <a href="trombinoscope?action="><span class="remove_profil"></span></a>
+                    <% } %>
                 </div>
                 <div class="nom">
                     <a href="javascript:void(0);"><jsp:getProperty name="utilisateur" property="prenom" /> 
