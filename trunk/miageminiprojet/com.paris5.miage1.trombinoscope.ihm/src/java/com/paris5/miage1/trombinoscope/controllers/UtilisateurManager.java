@@ -297,19 +297,24 @@ public class UtilisateurManager extends Module {
 
         switch (this.getAction()) {
             case CREATE_USER:
-                target = "views/create.jsp";
+                if(session.getAttribute("ajout")!=null)
+                    target = "views/create.jsp";
                 break;
             case SEND_PHOTO:
-                this.writePhoto();
-                target = null;
+                if(session.getAttribute("ajout")!=null){
+                    this.writePhoto();
+                    target = null;
+                }
                 break;
 
             case ADD_USER:
+                if(session.getAttribute("ajout")!=null){
                 String user_login = addUser();
-                if (user_login != null) {
-                    target = "trombinoscope?action=show_user&id=" + user_login;
-                } else {
-                    target = "views/create.jsp";
+                    if (user_login != null) {
+                        target = "trombinoscope?action=show_user&id=" + user_login;
+                    } else {
+                        target = "views/create.jsp";
+                    }
                 }
                 break;
 
@@ -318,6 +323,16 @@ public class UtilisateurManager extends Module {
                     target = "views/profil.jsp";
                 }
                 break;
+            case DELETE_USER :
+                String login = Valideur.getAlphaNumeric("id");
+                if(login!=null && session.getAttribute("desactiver")!=null){
+                    TrombiDAO dao = TrombiFactory.getUtilisateurDAO();
+                    Utilisateur u = new Utilisateur();
+                    u.setLogin(login);
+                    dao.delete(u);
+                }
+                break;
+            
         }
         System.out.println("action=" + this.getAction() + " target" + target);
         if (target != null) {

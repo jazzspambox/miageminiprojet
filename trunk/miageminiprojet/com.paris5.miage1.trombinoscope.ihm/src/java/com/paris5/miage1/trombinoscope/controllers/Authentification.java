@@ -19,6 +19,9 @@
  ------------------------------------------------------------------------ */
 package com.paris5.miage1.trombinoscope.controllers;
 
+import com.paris5.miage1.trombinoscope.bean.Droit;
+import com.paris5.miage1.trombinoscope.bean.Utilisateur;
+import com.paris5.miage1.trombinoscope.dao.GroupeDAO;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
@@ -28,6 +31,9 @@ import com.paris5.miage1.trombinoscope.dao.SearchDAO;
 import com.paris5.miage1.trombinoscope.processor.Module;
 import com.paris5.miage1.trombinoscope.utils.Notification;
 import com.paris5.miage1.trombinoscope.utils.Action;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * controlleur de l authentification
@@ -62,7 +68,7 @@ public class Authentification extends Module {
         user = search.findByLoginPassword(request.getParameter("login"), request.getParameter("pwd"));
         if (user != null) {
             session = request.getSession();
-           session.setAttribute("user", user);
+            session.setAttribute("user", user);
             return true;
         }
         
@@ -100,15 +106,15 @@ public class Authentification extends Module {
                  
                 if(login != null && pwd != null && authentification(login, pwd)) {
                     //request.setAttribute("action", "DEFAULT");
+                    GroupeDAO dao = new GroupeDAO();
+                    Map<String, String> rights= (Map<String, String>) dao.getListeDroits();
+                    Set<String> keys = rights.keySet();
+                    Utilisateur u = (Utilisateur) session.getAttribute("user");
                     
-                   if (user.getGroupe().getNom().toUpperCase().equals("ETUDIANT")) {
-                      request.setAttribute("search_type", 0);
-                      } 
-                     else 
-                        {
-                           request.setAttribute("search_type", 7);
-                          }
-                   
+                    for(Droit d: u.getGroupe().getDroits()){
+                        this.session.setAttribute(d.getName(), d);
+                    }
+  
                     Module module = new Recherche(request, response);
                     module.run();
                 }
