@@ -50,7 +50,7 @@
                     </li>
                     <li><a href="javascript:void(0);" ><span>Aide</span></a>
                     </li>
-                    <li><a href="javascript:void(0);" ><span>Documentation</span></a>
+                    <li><a href="javascript:window.open('javadoc/index.html','trombi-documentation');" ><span>Documentation</span></a>
                     </li>
                     <li id="disconnect"><a href="trombinoscope?action=deconnect">Deconnexion</a></li>
                 </ul>
