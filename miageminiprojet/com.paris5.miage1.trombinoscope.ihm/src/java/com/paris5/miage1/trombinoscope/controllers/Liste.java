@@ -1,55 +1,27 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.paris5.miage1.trombinoscope.controllers;
 
-import com.paris5.miage1.trombinoscope.dao.SearchDAO;
-import com.paris5.miage1.trombinoscope.processor.Zone;
-import java.util.ArrayList;
-import java.util.List;
+import com.paris5.miage1.trombinoscope.bean.Utilisateur;
+import com.paris5.miage1.trombinoscope.utils.Action;
+import com.paris5.miage1.trombinoscope.utils.Filtre;
+import java.sql.SQLException;
 
 /**
  *
  * @author mourad
  */
-public class Liste extends ArrayList implements Zone{
-    
-    private int start;
-    private SearchDAO search;
-    
-    public Liste(List l){
-        super(l);
-        start = 0;
+public class Liste extends Resultat {
+
+    public Liste(Filtre filtre, Utilisateur usr, int count, int start) throws SQLException {
+        super(filtre, usr, count, start);
     }
     
-    public Liste(int start, List l) {
-        super(l);
-        this.start = start;
-    }
-
     @Override
-    public void next() {
-        start++;
-    }
-
-    @Override
-    public void precedent() {
-        start--;
-    }
-
-    @Override
-    public void page(int num) {
-        start=num;
-    }
-
-    @Override
-    public int getCurrentPage() {
-        return start;
-    }
-
-    @Override
-    public int getNombrePages() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-    
-    private void executeSearch(){
+    public void execute() {
         
     }
+    
 }

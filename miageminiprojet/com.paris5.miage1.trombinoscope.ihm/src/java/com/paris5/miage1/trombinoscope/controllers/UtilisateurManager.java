@@ -172,11 +172,9 @@ public class UtilisateurManager extends Module {
             boolean mobile = Valideur.isPhone(request.getParameter("mobile"));
             boolean sex = Valideur.getNumeric(request.getParameter("sex")) > 0;
             boolean photo = Valideur.isPhoto(request.getParameter("photo_url"));
-            System.out.println(request.getParameter("photo_url"));
             String num_etudiant = Valideur.getAlphaNumeric(request.getParameter("num_etudiant"));
             String groupe_nom = Valideur.getAlphabetic(request.getParameter("groupe"));
             String formation = Valideur.getAuthorized(request.getParameter("search_promo"));
-            System.out.println("form=" + formation);
             int sess = 0;
             int formation_id = 0;
             if (formation != null) {
@@ -197,7 +195,7 @@ public class UtilisateurManager extends Module {
             usr.setPrenom(prenom);
             if(telephone)
                 usr.setTelephone(request.getParameter("fixe"));
-            if(mobile)
+            //if(mobile)
                 usr.setMobile(request.getParameter("mobile"));
             usr.setSex(sex);
             
@@ -220,17 +218,14 @@ public class UtilisateurManager extends Module {
                     int h = Valideur.getNumeric(request.getParameter("h"));
                     int w = Valideur.getNumeric(request.getParameter("w"));
                     
-                    System.out.println("x="+x+" y="+y+" x2="+x2+" y2="+y2);
                     if ( x != 0 && y != 0 && x2 != 0 && y2 != 0) {
-                        picture.crop(x, y, x2, y2);
-                        System.out.println("crop");
+                        //picture.crop(x, y, x2, y2);
                     }
 
                     if (picture.getHeight() > Configuration.Photo.MAX_HEIGHT
                             || picture.getWidth() > Configuration.Photo.MAX_WIDTH) {
 
-                        picture.resize(Configuration.Photo.MAX_HEIGHT, Configuration.Photo.MAX_WIDTH);
-                        System.out.println("resize");
+                        //picture.resize(Configuration.Photo.MAX_HEIGHT, Configuration.Photo.MAX_WIDTH);
                     }
                     
                     usr.setPhotoUploaded(picture.get());
