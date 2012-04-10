@@ -67,13 +67,9 @@ public class Recherche extends ZoneManager {
         }
         
         // hack search null
-        if(searchValue.equals("")){
-            if(formation_id!=0 && session!=0){
-                act=Action.SEARCH_PROMOTION;
-            }
-            else{
-                act=Action.DEFAULT;
-            }
+        if(searchValue.equals("") && session==0){
+               act=Action.DEFAULT;
+               this.session.setAttribute("filtre", null);
         }
         
         // initialisation du filtre
