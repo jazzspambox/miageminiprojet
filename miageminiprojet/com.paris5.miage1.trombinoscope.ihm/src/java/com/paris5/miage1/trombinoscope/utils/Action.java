@@ -33,6 +33,7 @@ public enum Action {
     SHOW_USER,
     MODIFY_USER,
     ADD_USER,
+    DELETE_USER,
     GO_NEXT_PAGE,
     GO_PRECEDENT_PAGE,
     GO_PAGE,
