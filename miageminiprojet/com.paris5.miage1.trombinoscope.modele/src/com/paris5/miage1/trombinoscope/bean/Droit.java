@@ -12,6 +12,9 @@ public class Droit {
     private String name;
     private String description;
 
+    public Droit() {
+    }
+
     /**
      * 
      * @param name
@@ -38,6 +41,10 @@ public class Droit {
         return name;
     }
 
+    public void clean(){
+        name = "";
+        description = "";
+    }
     /**
      * 
      * @return
