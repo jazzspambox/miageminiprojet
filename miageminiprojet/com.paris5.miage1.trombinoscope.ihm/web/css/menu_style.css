@@ -82,3 +82,7 @@
 .menu p{
     clear:left;
 }
+
+#disconnect{
+    float:right;
+}
