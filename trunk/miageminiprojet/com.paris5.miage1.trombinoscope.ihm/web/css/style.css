@@ -74,8 +74,8 @@
 
 #mini_profil {
     float:left;
-    width: 180px;
-    height: 290px;
+    width: 228px;
+    height: 260px;
     margin: 5px;
     padding-right: 5px;
     text-align: center;
@@ -83,6 +83,18 @@
     margin-bottom: 20px;
     border: 1px solid #E5E5E5;
     padding: 5px;
+}
+
+#profil {
+    clear:both;
+    width: 228px;
+    height: 330px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    border: 1px solid #E5E5E5;
+    padding: 20px;
 }
 
 .fixe, .email, .portable, .NumEtudiant {
@@ -116,6 +128,7 @@
 .mini_photo{
     width: 140px;
     margin: auto;
+    height: 150px;
 }
 
 .mini_photo img {
@@ -219,60 +232,60 @@ p.success, p.info, p.error, p.warning {
 }
 
 #tnt_pagination {
-	display:block;
-	text-align:center;
-	height:22px;
-	line-height:21px;
-	clear:both;
-	padding-top:3px;
-	font-family:Arial, Helvetica, sans-serif;
-	font-size:12px;
-	font-weight:normal;
-        width: 400px;
-        margin:auto;
+    display:block;
+    text-align:center;
+    height:22px;
+    line-height:21px;
+    clear:both;
+    padding-top:3px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:12px;
+    font-weight:normal;
+    width: 400px;
+    margin:auto;
 }
 
 #tnt_pagination a:link, #tnt_pagination a:visited{
-	padding:7px;
-	padding-top:2px;
-	padding-bottom:2px;
-	border:1px solid #EBEBEB;
-	margin-left:10px;
-	text-decoration:none;
-	background-color:#F5F5F5;
-	color:#0072bc;
-	width:22px;
-	font-weight:normal;
+    padding:7px;
+    padding-top:2px;
+    padding-bottom:2px;
+    border:1px solid #EBEBEB;
+    margin-left:10px;
+    text-decoration:none;
+    background-color:#F5F5F5;
+    color:#0072bc;
+    width:22px;
+    font-weight:normal;
 }
 
 #tnt_pagination a:hover {
-	background-color:#DDEEFF;
-	border:1px solid #BBDDFF;
-	color:#0072BC;	
+    background-color:#DDEEFF;
+    border:1px solid #BBDDFF;
+    color:#0072BC;	
 }
 
 #tnt_pagination .active_tnt_link {
-	padding:7px;
-	padding-top:2px;
-	padding-bottom:2px;
-	border:1px solid #BBDDFF;
-	margin-left:10px;
-	text-decoration:none;
-	background-color:#DDEEFF;
-	color:#0072BC;
-	cursor:default;
+    padding:7px;
+    padding-top:2px;
+    padding-bottom:2px;
+    border:1px solid #BBDDFF;
+    margin-left:10px;
+    text-decoration:none;
+    background-color:#DDEEFF;
+    color:#0072BC;
+    cursor:default;
 }
 
 #tnt_pagination .disabled_tnt_pagination {
-	padding:7px;
-	padding-top:2px;
-	padding-bottom:2px;
-	border:1px solid #EBEBEB;
-	margin-left:10px;
-	text-decoration:none;
-	background-color:#F5F5F5;
-	color:#D7D7D7;
-	cursor:default;
+    padding:7px;
+    padding-top:2px;
+    padding-bottom:2px;
+    border:1px solid #EBEBEB;
+    margin-left:10px;
+    text-decoration:none;
+    background-color:#F5F5F5;
+    color:#D7D7D7;
+    cursor:default;
 }
 
 .tnt_pagination_next{
