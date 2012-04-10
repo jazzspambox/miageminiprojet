@@ -1,7 +1,22 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+/* ------------------------------------------------------------------------
+ 
+    Licensed under the Educational Community License version 1.0
+
+    This Original Work, including software, source code, documents,
+    or other related items, is being provided by the copyright holder(s)
+    subject to the terms of the Educational Community License. By
+    obtaining, using and/or copying this Original Work, you agree that you
+    have read, understand, and will comply with the following terms and
+    conditions of the Educational Community License:
+
+    Permission to use, copy, modify, merge, publish, distribute, and
+    sublicense this Original Work and its documentation, with or without
+    modification, for any purpose, and without fee or royalty to the
+    copyright holder(s) is hereby granted, provided that you include the
+    following on ALL copies of the Original Work or portions thereof,
+    including modifications or derivatives.
+
+ ------------------------------------------------------------------------ */
 package com.paris5.miage1.trombinoscope.controllers;
 
 import java.io.IOException;
@@ -19,7 +34,8 @@ import java.util.Scanner;
 import javax.servlet.http.Part;
 
 /**
- * @author mourad
+ * front controller MVC2
+ * @author Mourad, Saliou, Idir
  */
 public final class Trombinoscope extends HttpServlet {
 
@@ -133,9 +149,13 @@ public final class Trombinoscope extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+        return "Trombinoscope Miage paris 5 - 2012";
+    }
 
+    /**
+     * initialise quelques variable d'environnement
+     * @param request HttpServletRequest
+     */
     private void initEnv(HttpServletRequest request) {
         String servletPath = this.getServletContext().getRealPath("");
         servletPath = servletPath.replace("build/", "") + '/';
@@ -145,6 +165,13 @@ public final class Trombinoscope extends HttpServlet {
         request.setAttribute("url", url);
     }
 
+    /**
+     * recherche l'action envoyee dans la requete http
+     * @param request HttpServletRequest
+     * @return String 
+     * @throws IOException
+     * @throws ServletException 
+     */
     private String getAction(HttpServletRequest request) throws IOException, ServletException {
         String action = Valideur.getAuthorized(request.getParameter("action"));
         if (action == null) {

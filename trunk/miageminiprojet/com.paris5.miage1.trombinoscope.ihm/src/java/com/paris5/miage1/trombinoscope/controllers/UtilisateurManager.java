@@ -1,7 +1,22 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+/* ------------------------------------------------------------------------
+ 
+    Licensed under the Educational Community License version 1.0
+
+    This Original Work, including software, source code, documents,
+    or other related items, is being provided by the copyright holder(s)
+    subject to the terms of the Educational Community License. By
+    obtaining, using and/or copying this Original Work, you agree that you
+    have read, understand, and will comply with the following terms and
+    conditions of the Educational Community License:
+
+    Permission to use, copy, modify, merge, publish, distribute, and
+    sublicense this Original Work and its documentation, with or without
+    modification, for any purpose, and without fee or royalty to the
+    copyright holder(s) is hereby granted, provided that you include the
+    following on ALL copies of the Original Work or portions thereof,
+    including modifications or derivatives.
+
+ ------------------------------------------------------------------------ */
 package com.paris5.miage1.trombinoscope.controllers;
 
 import com.paris5.miage1.trombinoscope.bean.Formation;
@@ -31,11 +46,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 /**
- * 
- * @author mourad
+ * page d administration des utilisateurs
+ * @author Mourad, Saliou, Idir
  */
 public class UtilisateurManager extends Module {
 
+    /**
+     * constructeur 
+     * @param request requete envoyee
+     * @param response reponse attendu
+     * @throws NullPointerException
+     * @throws ServletException
+     * @throws IOException
+     * @throws SQLException 
+     */
     public UtilisateurManager(HttpServletRequest request, HttpServletResponse response) throws NullPointerException, ServletException, IOException, SQLException {
         super(true, request, response);
         GroupeDAO dao = new GroupeDAO();
@@ -63,6 +87,12 @@ public class UtilisateurManager extends Module {
         
     }
 
+    /**
+     * ecrit une photo envoyee sur le serveur
+     * @return booelan
+     * @throws ServletException
+     * @throws IOException 
+     */
     private boolean writePhoto() throws ServletException, IOException {
 
         FileOutputStream os = null;
@@ -116,6 +146,9 @@ public class UtilisateurManager extends Module {
         return loaded;
     }
 
+    /**
+     * initialise le chemain prive de l administrateur conncte
+     */
     private void initUserDir() {
         String dir = this.getPath() + Configuration.Photo.PATH + File.separator + user.getLogin();
         File handler = new File(dir);
@@ -130,6 +163,12 @@ public class UtilisateurManager extends Module {
         }
     }
 
+    /**
+     * extrait des information d un part
+     * @param part Part
+     * @param param String information desiree
+     * @return 
+     */
     private String getContentDisposition(Part part, String param) {
 
         for (String cd : part.getHeader("content-disposition").split(";")) {
@@ -141,6 +180,11 @@ public class UtilisateurManager extends Module {
         return null;
     }
 
+    /**
+     * recherche l existance d un utilisateur dans la base de donnee
+     * @return boolean
+     * @throws SQLException 
+     */
     private boolean loadUser() throws SQLException {
         TrombiDAO tdao = TrombiFactory.getUtilisateurDAO();
         String login = Valideur.getAuthorized(request.getParameter("id"));
@@ -155,6 +199,12 @@ public class UtilisateurManager extends Module {
         return false;
     }
 
+    /**
+     * insert un utilisateur dans la base de donnee
+     * @return String login de l utilisateur
+     * @throws SQLException
+     * @throws IOException 
+     */
     public String addUser() throws SQLException, IOException {
 
         String login = Valideur.getAlphabetic(request.getParameter("login"), "");

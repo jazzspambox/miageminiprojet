@@ -1,7 +1,22 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+/* ------------------------------------------------------------------------
+ 
+    Licensed under the Educational Community License version 1.0
+
+    This Original Work, including software, source code, documents,
+    or other related items, is being provided by the copyright holder(s)
+    subject to the terms of the Educational Community License. By
+    obtaining, using and/or copying this Original Work, you agree that you
+    have read, understand, and will comply with the following terms and
+    conditions of the Educational Community License:
+
+    Permission to use, copy, modify, merge, publish, distribute, and
+    sublicense this Original Work and its documentation, with or without
+    modification, for any purpose, and without fee or royalty to the
+    copyright holder(s) is hereby granted, provided that you include the
+    following on ALL copies of the Original Work or portions thereof,
+    including modifications or derivatives.
+
+ ------------------------------------------------------------------------ */
 package com.paris5.miage1.trombinoscope.controllers;
 import com.paris5.miage1.trombinoscope.bean.Utilisateur;
 import com.paris5.miage1.trombinoscope.dao.SearchDAO;
@@ -12,28 +27,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- *
- * @author mourad
+ * zone de gestion des resultats de recherches
+ * @author Mourad, Saliou, Idir
  */
 public abstract class Resultat extends Zone {
     
-    //
     protected Utilisateur user;
-    
-    //
     protected double count;
-    
-    //
     protected int start;
-    
-    //
     protected Filtre filtre;
                
     /**
+     * constructeur
      * 
-     * @param usr
-     * @param act
-     * @param page
+     * @param usr Utilisateur connecte
+     * @param act Action
+     * @param page numero de la page courante
      * @throws SQLException 
      */
     public Resultat(Filtre filtre, Utilisateur usr) throws SQLException{
@@ -44,6 +53,15 @@ public abstract class Resultat extends Zone {
         this.init(true);
     }
     
+    /**
+     * constructeur
+     * 
+     * @param filtre Filter criteres de recherches
+     * @param usr Utilisateur connecte
+     * @param count nombre de resultats
+     * @param start born inferieur de recherche
+     * @throws SQLException 
+     */
     public Resultat(Filtre filtre, Utilisateur usr, int count, int start) throws SQLException{
         super();
         this.user = usr;
@@ -54,6 +72,11 @@ public abstract class Resultat extends Zone {
         this.init(false);
     }
     
+    /**
+     * initialise la recherche selon l action envoyee
+     * @param countResult pour faire soit un comptage soit une recuperation  des resultats
+     * @throws SQLException 
+     */
     private void init(boolean countResult) throws SQLException {
         
         String format = "yyyy";
@@ -144,6 +167,10 @@ public abstract class Resultat extends Zone {
         filtre.setResultCount((int) this.count);
     }
 
+    /**
+     * retourn le nombre de resultats
+     * @return int
+     */
     public int getCount() {
         return (int) count;
     }
