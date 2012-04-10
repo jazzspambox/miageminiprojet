@@ -27,15 +27,6 @@
            });
         </script>
         <div id="page" class="page">
-            <jsp:useBean id="notification" class="com.paris5.miage1.trombinoscope.utils.Notification" scope="request" >
-            <br/>
-            <div class="<jsp:getProperty name="notification" property="level" />">
-                <p>Notification (
-                    <jsp:getProperty name="notification" property="id" />) :
-                    <jsp:getProperty name="notification" property="message" /> une erreur interne c'est produite, l'ajout d'utilisateur a echouer.</p>
-            </div>
-            <br/>
-            </jsp:useBean>
             <div id="photoContainer">
                 <div id="photoLoader">
                     <img id="profilPhoto" src="images/photo-indisponible.png" alt="portrait" />
@@ -61,9 +52,9 @@
                 <div id="data_authent">
                     <h4>Authentification</h4>
                     <label for="login">- idantifiant : *</label>
-                    <input type="text" name="login" value ="<jsp:getProperty name="profil" property="nom" />" class="validate[required,custom[onlyAuthorized],length[6,10]]" id="login" /><br/>
+                    <input type="text" name="login" value ="<jsp:getProperty name="profil" property="nom" />" class="validate[required,custom[onlyAuthorized],length[3,15]]" id="login" /><br/>
                     <label for="password">- mot de passe : *</label>
-                    <input name="password" value="<jsp:getProperty name="profil" property="password" />" class="validate[required,length[6,10]] text-input" type="password" id="password" /><br/>
+                    <input name="password" value="<jsp:getProperty name="profil" property="password" />" class="validate[required,length[8,10]] text-input" type="password" id="password" /><br/>
                     <label for="liste_groupes">- groupe : *</label>
                     <jsp:useBean id="groupe" class="com.paris5.miage1.trombinoscope.bean.Groupe" scope="page" />
                     <select id="liste_groupes" class="validate[required] liste_groupes" name="groupe" />

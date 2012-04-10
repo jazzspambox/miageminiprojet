@@ -3,7 +3,7 @@
 <%@include file="menu.jsp" %>
         <div id="page" class="page">
             
-            <div id="">
+            <div id="profil">
                 <div class="mini_photo">
                     <img id="preview" src="photos/<jsp:getProperty name="profil" property="photoUrl" />" />
                 </div>

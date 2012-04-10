@@ -12,6 +12,7 @@
 
         <!-- javascript -->
         <script src="javascript/jquery-1.7.1.min.js" type="text/javascript"></script>
+        <script src="javascript/main.js" type="text/javascript"></script>
     </head>
     <body>
         <div class="authent_main">
@@ -25,10 +26,14 @@
                 <form action="trombinoscope" method="post">
                     <input type="hidden" name="action" value="authent" />
                     <div>
-                        <input type="text" class="authent_input" name="login" title="Nom d'utilisateur" value="Nom d'utilisateur" />
+                        <input type="text" class="authent_input" id="login" name="login" title="Nom d'utilisateur" value="Nom d'utilisateur" 
+                               onfocus="javascript:inputBehaviour('login', 'Nom d\'utilisateur');"
+                               onblur="javascript:inputBehaviour('login', 'Nom d\'utilisateur');"/>
                     </div>
                     <div>
-                        <input type="password" class="authent_input" name="pwd" title="Mot de passe" value="Mot de passe" />
+                        <input type="password" class="authent_input" id='pwd' name="pwd" title="Mot de passe" value="Mot de passe"
+                               onfocus="javascript:inputBehaviour('pwd', 'Mot de passe');"
+                               onBlur="javascript:inputBehaviour('pwd', 'Mot de passe');"/>
                     </div>
                     <div class="authent_submit">
                         <input type="submit" class="blue_btn submit_btn" value="Se connecter" />
