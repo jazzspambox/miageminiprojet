@@ -1,15 +1,29 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+/* ------------------------------------------------------------------------
+ 
+    Licensed under the Educational Community License version 1.0
+
+    This Original Work, including software, source code, documents,
+    or other related items, is being provided by the copyright holder(s)
+    subject to the terms of the Educational Community License. By
+    obtaining, using and/or copying this Original Work, you agree that you
+    have read, understand, and will comply with the following terms and
+    conditions of the Educational Community License:
+
+    Permission to use, copy, modify, merge, publish, distribute, and
+    sublicense this Original Work and its documentation, with or without
+    modification, for any purpose, and without fee or royalty to the
+    copyright holder(s) is hereby granted, provided that you include the
+    following on ALL copies of the Original Work or portions thereof,
+    including modifications or derivatives.
+
+ ------------------------------------------------------------------------ */
+
 package com.paris5.miage1.trombinoscope.utils;
 
 import com.paris5.miage1.trombinoscope.bean.Utilisateur;
 import com.paris5.miage1.trombinoscope.dao.UtilisateurDAO;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -24,19 +38,25 @@ import nl.bitwalker.useragentutils.UserAgent;
 import nl.bitwalker.useragentutils.Version;
 
 /**
- *
- * @author mourad
+ * Classe permettant de tracer les activite d authentification sur le site
+ * @author Mourad, Saliou, Idir
  */
 public class Tracker implements Filter {
 
     private FilterConfig config;
 
     @Override
+    /**
+     * initialisation du filtre
+     */
     public void init(FilterConfig filterConfig) throws ServletException {
         this.config = filterConfig;
     }
 
     @Override
+    /**
+     * execution du filtre
+     */
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         Utilisateur user = null;
