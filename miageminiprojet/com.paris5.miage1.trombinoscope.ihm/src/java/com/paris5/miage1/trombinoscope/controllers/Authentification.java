@@ -1,7 +1,22 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+/* ------------------------------------------------------------------------
+ 
+    Licensed under the Educational Community License version 1.0
+
+    This Original Work, including software, source code, documents,
+    or other related items, is being provided by the copyright holder(s)
+    subject to the terms of the Educational Community License. By
+    obtaining, using and/or copying this Original Work, you agree that you
+    have read, understand, and will comply with the following terms and
+    conditions of the Educational Community License:
+
+    Permission to use, copy, modify, merge, publish, distribute, and
+    sublicense this Original Work and its documentation, with or without
+    modification, for any purpose, and without fee or royalty to the
+    copyright holder(s) is hereby granted, provided that you include the
+    following on ALL copies of the Original Work or portions thereof,
+    including modifications or derivatives.
+
+ ------------------------------------------------------------------------ */
 package com.paris5.miage1.trombinoscope.controllers;
 
 import java.io.IOException;
@@ -9,33 +24,34 @@ import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import com.paris5.miage1.trombinoscope.bean.Utilisateur;
 import com.paris5.miage1.trombinoscope.dao.SearchDAO;
 import com.paris5.miage1.trombinoscope.processor.Module;
 import com.paris5.miage1.trombinoscope.utils.Notification;
 import com.paris5.miage1.trombinoscope.utils.Action;
 
 /**
- * @author mourad
+ * controlleur de l authentification
+ * @author Mourad, Saliou, Idir
  */
 public class Authentification extends Module {
 
     /**
-     * 
-     * @param request
-     * @param response
-     * @throws SQLException 
+     * constructeur 
+     * @param request HttpServletRequest requete envoyee
+     * @param response HttpServletResponse reponse attendu
+     * @throws NullPointerException
+     * @throws ServletException
+     * @throws IOException 
      */
     public Authentification(HttpServletRequest request, HttpServletResponse response) throws NullPointerException, ServletException, IOException {
         super(false, request, response);
     }
     
     /**
-     * 
-     * @param login
-     * @param pwd
-     * @return
+     * methode d'authentification
+     * @param login String login
+     * @param pwd String password
+     * @return boolean
      * @throws SQLException 
      */
     private boolean authentification(String login, String pwd) throws SQLException {
@@ -54,8 +70,8 @@ public class Authentification extends Module {
     }
     
     /**
-     * 
-     * @return 
+     * methode de deconnection
+     * @return boolean
      */
     private boolean deconnexion(){
        
@@ -69,7 +85,10 @@ public class Authentification extends Module {
     }
     
     /**
-     * 
+     * execute le processus d autentification
+     * @throws SQLException
+     * @throws ServletException
+     * @throws IOException 
      */
     public void process() throws SQLException, ServletException, IOException {
         String login = request.getParameter("login");
