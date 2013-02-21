@@ -5,10 +5,8 @@
 package entities;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.util.Set;
+import javax.persistence.*;
 
 /**
  *
@@ -35,6 +33,17 @@ public class Article implements Serializable {
         hash += (idComment != null ? idComment.hashCode() : 0);
         return hash;
     }
+    
+ @ManyToMany(cascade=CascadeType.ALL)
+@JoinTable(name = "bid",
+joinColumns = {
+@JoinColumn(name="idUser") 
+},
+inverseJoinColumns = {
+@JoinColumn(name="idArticle")
+}
+)
+private Set<Book> bids;
 
     @Override
     public boolean equals(Object object) {
