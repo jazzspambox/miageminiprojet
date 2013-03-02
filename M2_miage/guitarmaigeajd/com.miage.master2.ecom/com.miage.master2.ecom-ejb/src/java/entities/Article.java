@@ -14,6 +14,7 @@ import javax.persistence.*;
  */
 @Entity
 public class Article implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,21 +34,18 @@ public class Article implements Serializable {
         hash += (idComment != null ? idComment.hashCode() : 0);
         return hash;
     }
-    
- @ManyToMany(cascade=CascadeType.ALL)
-@JoinTable(name = "bid",
-joinColumns = {
-@JoinColumn(name="idUser") 
-},
-inverseJoinColumns = {
-@JoinColumn(name="idArticle")
-}
-)
-private Set<Book> bids;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "bid",
+    joinColumns = {
+        @JoinColumn(name = "idUser")
+    },
+    inverseJoinColumns = {
+        @JoinColumn(name = "idArticle")
+    })
+//    private Set<Book> bids;
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Article)) {
             return false;
         }
@@ -62,5 +60,4 @@ private Set<Book> bids;
     public String toString() {
         return "entities.Article[ id=" + idComment + " ]";
     }
-    
 }
