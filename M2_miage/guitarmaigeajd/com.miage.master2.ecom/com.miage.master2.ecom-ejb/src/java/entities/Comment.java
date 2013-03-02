@@ -1,4 +1,3 @@
-
 package entities;
 
 import java.io.Serializable;
@@ -23,6 +22,7 @@ public class Comment implements Serializable {
     private static final long serialVersionUID = 1L;
     private Long idComment;
     private User user;
+   
     private Article article;
     private String description;
     private Date creatDate;
