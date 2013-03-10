@@ -5,10 +5,8 @@
 package entities;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.sql.Date;
+import javax.persistence.*;
 
 /**
  *
@@ -16,23 +14,144 @@ import javax.persistence.Id;
  */
 @Entity
 public class User implements Serializable {
+
     private static final long serialVersionUID = 1L;
+    private Long idUser;
+    private String lastName;
+    private String firstName;
+    private String adresse;
+    private String cellular;
+    private String phone;
+    private String email;
+    private String password;
+    private Date createDate;
+    private Date updateDate;
+    private byte[] photo;
+    private Country country;
+    private Cart cart;
+    private Account account;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long Userid;
-
-    public Long getId() {
-        return Userid;
+    public Long getIdUser() {
+        return idUser;
     }
 
-    public void setId(Long id) {
-        this.Userid = id;
+    public void setIdUser(Long id) {
+        this.idUser = id;
+    }
+
+    public String getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
+
+    public String getCellular() {
+        return cellular;
+    }
+
+    public void setCellular(String cellular) {
+        this.cellular = cellular;
+    }
+    @OneToOne(cascade= CascadeType.ALL,mappedBy="user")
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    @Lob
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (Userid != null ? Userid.hashCode() : 0);
+        hash += (idUser != null ? idUser.hashCode() : 0);
         return hash;
     }
 
@@ -43,7 +162,7 @@ public class User implements Serializable {
             return false;
         }
         User other = (User) object;
-        if ((this.Userid == null && other.Userid != null) || (this.Userid != null && !this.Userid.equals(other.Userid))) {
+        if ((this.idUser == null && other.idUser != null) || (this.idUser != null && !this.idUser.equals(other.idUser))) {
             return false;
         }
         return true;
@@ -51,7 +170,6 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.User[ id=" + Userid + " ]";
+        return "entities.User[ id=" + idUser + " ]";
     }
-    
 }

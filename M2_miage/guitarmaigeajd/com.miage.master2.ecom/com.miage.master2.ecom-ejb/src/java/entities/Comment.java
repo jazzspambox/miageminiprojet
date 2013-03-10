@@ -6,7 +6,8 @@ import javax.persistence.*;
 
 /**
  *
- * @author Saliou Cette classe represente un commentaire d'un utilisateur sur un
+ * @author Saliou 
+ * Cette classe represente un commentaire d'un utilisateur sur un
  * produit.
  */
 @Entity
@@ -22,8 +23,7 @@ public class Comment implements Serializable {
     private static final long serialVersionUID = 1L;
     private Long idComment;
     private User user;
-   
-    private Article article;
+    private ProductType product;
     private String description;
     private Date creatDate;
 
@@ -55,7 +55,7 @@ public class Comment implements Serializable {
     }
 
     @ManyToOne
-    @JoinColumn(name = "FK_commente_user")
+    @JoinColumn(name = "id_user")
     public User getUser() {
         return user;
     }
@@ -65,13 +65,13 @@ public class Comment implements Serializable {
     }
 
     @ManyToOne
-    @JoinColumn(name = "FK_commente_product")
-    public Article getArticle() {
-        return article;
+    @JoinColumn(name = "id_product")
+    public ProductType getProduct() {
+        return product;
     }
 
-    public void setArticle(Article article) {
-        this.article = article;
+    public void setProduct(ProductType article) {
+        this.product = article;
     }
 
     @Override
